@@ -119,10 +119,38 @@
       border: 1px solid rgba(0,229,255,0.35);
       box-shadow: 0 0 25px rgba(0,229,255,0.15);
     }
+
+    .qq-group-btn {
+      display: block;
+      width: 100%;
+      padding: 18px 0;
+      background: linear-gradient(135deg, #00c6ff, #0072ff);
+      border: none;
+      border-radius: 14px;
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      box-shadow: 0 6px 30px rgba(0, 114, 255, 0.4);
+      transition: 0.3s ease;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+    .qq-group-btn:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 40px rgba(0, 114, 255, 0.7);
+    }
+
     @media (max-width: 600px) {
       header {
         font-size: 18px;
         padding: 16px;
+      }
+      .qq-group-btn {
+        font-size: 18px;
+        padding: 14px 0;
       }
     }
   </style>
@@ -131,12 +159,13 @@
 
 <header>
   VOTR脚本网页😍
-  <div class="time-box">SYSTEM TIME: <span id="time"></span></div>
+  <div class="time-box">☠️当前时间: <span id="time"></span></div>
 </header>
 
 <div class="container">
 
   <div class="card">
+    <a href="https://qm.qq.com/q/x9AfF64NbO" target="_blank" class="qq-group-btn">📢 加入QQ群</a>
     <h2>更新日志</h2>
     <div class="log">
       • 添加服务器: 自然灾害<br>
