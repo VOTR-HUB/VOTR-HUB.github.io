@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Roblox Script Hub</title>
+<title>VOTR脚本网站</title>
 
 <style>
     body {
@@ -105,10 +105,23 @@
         font-size: 12px;
     }
 
-    /* 主脚本卡片强调 */
     .main-script {
         border: 1px solid rgba(0,229,255,0.35);
         box-shadow: 0 0 25px rgba(0,229,255,0.15);
+    }
+
+    .video-card video {
+        width: 100%;
+        border-radius: 10px;
+        background: #000;
+        display: block;
+    }
+
+    .video-card .video-info {
+        font-size: 12px;
+        opacity: 0.6;
+        margin-top: 6px;
+        text-align: center;
     }
 </style>
 </head>
@@ -117,12 +130,11 @@
 
 <header>
     😍 VOTR脚本网页
-    <div class="time-box">当前时间: <span id="time"></span></div>
+    <div class="time-box">目前时间: <span id="time"></span></div>
 </header>
 
 <div class="container">
 
-    <!-- 更新日志 -->
     <div class="card">
         <h2>📢 更新日志</h2>
         <div class="log">
@@ -138,19 +150,15 @@
         </div>
     </div>
 
-    <!-- 主脚本 -->
     <div class="card main-script">
         <h2>📜 主脚本</h2>
-
         <div class="script-box" id="script1">
 VOTR = "887502203"
 loadstring(game:HttpGet("https://raw.githubusercontent.com/VOTR-HUB/MAIN/refs/heads/main/VOTR-MAIN"))()
         </div>
-
         <button onclick="copyText('script1')">复制脚本</button>
     </div>
 
-    <!-- 作者团队 -->
     <div class="card">
         <h2>👨‍💻 作者团队</h2>
         <div class="log">
@@ -161,7 +169,6 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/VOTR-HUB/MAIN/refs/he
         </div>
     </div>
 
-    <!-- 系统信息 -->
     <div class="card">
         <h2>🕒 系统状态</h2>
         <div class="log">
@@ -170,6 +177,15 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/VOTR-HUB/MAIN/refs/he
             延迟：Low<br>
             骚逼: N/A
         </div>
+    </div>
+
+    <div class="card video-card">
+        <h2>🎬 视频播放器</h2>
+        <video id="videoPlayer" controls>
+            <source src="https://github.com/VOTR-HUB/VOTR-HUB.github.io/blob/main/%E9%97%AE%E5%8F%B7.mp4" type="video/mp4">
+            您的浏览器不支持视频播放
+        </video>
+        <div class="video-info">提示：浏览器可能阻止有声视频自动播放，请手动点击播放按钮</div>
     </div>
 
 </div>
@@ -181,8 +197,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/VOTR-HUB/MAIN/refs/he
 <script>
 function updateTime() {
     const now = new Date();
-    document.getElementById("time").innerText =
-        now.toLocaleString();
+    document.getElementById("time").innerText = now.toLocaleString();
 }
 setInterval(updateTime, 1000);
 updateTime();
