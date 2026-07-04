@@ -1,556 +1,573 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>VOTR HUB脚本网站</title>
-
-<style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VOTR HUB 脚本网站</title>
+  <style>
     * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
     body {
-        font-family: Arial, sans-serif;
-        background: radial-gradient(circle at top, #141427, #0b0b12);
-        color: white;
-        min-height: 100vh;
-        overflow-x: hidden;
+      font-family: Arial, sans-serif;
+      background: radial-gradient(circle at top, #141427, #0b0b12);
+      color: white;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
     .login-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
     }
 
     .login-box {
-        background: rgba(255,255,255,0.05);
-        border: 1px solid rgba(0,229,255,0.15);
-        border-radius: 20px;
-        padding: 45px 35px 40px;
-        width: 100%;
-        max-width: 400px;
-        backdrop-filter: blur(12px);
-        box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(0,229,255,0.15);
+      border-radius: 20px;
+      padding: 45px 35px 40px;
+      width: 100%;
+      max-width: 400px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
     }
 
     .login-box h1 {
-        text-align: center;
-        font-size: 28px;
-        margin-bottom: 6px;
-        background: linear-gradient(90deg, #7b2cff, #00e5ff);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+      text-align: center;
+      font-size: 28px;
+      margin-bottom: 6px;
+      background: linear-gradient(90deg, #7b2cff, #00e5ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     .login-box .subtitle {
-        text-align: center;
-        font-size: 14px;
-        opacity: 0.5;
-        margin-bottom: 28px;
+      text-align: center;
+      font-size: 14px;
+      opacity: 0.5;
+      margin-bottom: 28px;
     }
 
     .login-box .form-group {
-        margin-bottom: 18px;
+      margin-bottom: 18px;
     }
 
     .login-box .form-group label {
-        display: block;
-        font-size: 14px;
-        margin-bottom: 6px;
-        opacity: 0.8;
+      display: block;
+      font-size: 14px;
+      margin-bottom: 6px;
+      opacity: 0.8;
     }
 
     .login-box .form-group input {
-        width: 100%;
-        padding: 12px 16px;
-        border-radius: 10px;
-        border: 1px solid rgba(255,255,255,0.12);
-        background: rgba(0,0,0,0.35);
-        color: white;
-        font-size: 15px;
-        outline: none;
-        transition: 0.3s;
-        box-sizing: border-box;
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.35);
+      color: white;
+      font-size: 15px;
+      outline: none;
+      transition: 0.3s;
+      box-sizing: border-box;
     }
 
     .login-box .form-group input:focus {
-        border-color: #7b2cff;
-        box-shadow: 0 0 20px rgba(123, 44, 255, 0.15);
+      border-color: #7b2cff;
+      box-shadow: 0 0 20px rgba(123, 44, 255, 0.15);
     }
 
     .login-box .form-group input::placeholder {
-        color: rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.3);
     }
 
     .login-btn {
-        width: 100%;
-        padding: 13px;
-        background: linear-gradient(90deg, #7b2cff, #00e5ff);
-        border: none;
-        color: white;
-        border-radius: 10px;
-        cursor: pointer;
-        font-weight: bold;
-        font-size: 16px;
-        transition: 0.3s;
-        box-shadow: 0 0 20px rgba(0,229,255,0.15);
+      width: 100%;
+      padding: 13px;
+      background: linear-gradient(90deg, #7b2cff, #00e5ff);
+      border: none;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+      transition: 0.3s;
+      box-shadow: 0 0 20px rgba(0,229,255,0.15);
     }
 
     .login-btn:hover {
-        transform: scale(1.02);
-        box-shadow: 0 0 30px rgba(0,229,255,0.3);
+      transform: scale(1.02);
+      box-shadow: 0 0 30px rgba(0,229,255,0.3);
     }
 
     .login-error {
-        color: #ff6b6b;
-        font-size: 13px;
-        text-align: center;
-        margin-top: 12px;
-        min-height: 20px;
+      color: #ff6b6b;
+      font-size: 13px;
+      text-align: center;
+      margin-top: 12px;
+      min-height: 20px;
     }
 
     .login-box .register-tip {
-        text-align: center;
-        font-size: 13px;
-        opacity: 0.6;
-        margin-top: 16px;
+      text-align: center;
+      font-size: 13px;
+      opacity: 0.6;
+      margin-top: 16px;
     }
 
     .login-box .register-tip span {
-        color: #00e5ff;
-        cursor: pointer;
-        opacity: 1;
+      color: #00e5ff;
+      cursor: pointer;
+      opacity: 1;
     }
 
     .login-box .register-tip span:hover {
-        text-decoration: underline;
+      text-decoration: underline;
     }
 
     #mainApp {
-        display: none;
+      display: none;
     }
 
     header {
-        background: linear-gradient(90deg, #7b2cff, #00e5ff);
-        padding: 22px;
-        text-align: center;
-        font-size: 26px;
-        font-weight: bold;
-        letter-spacing: 1px;
-        box-shadow: 0 0 25px rgba(0, 229, 255, 0.25);
-        position: relative;
+      background: linear-gradient(90deg, #7b2cff, #00e5ff);
+      padding: 22px;
+      text-align: center;
+      font-size: 26px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      box-shadow: 0 0 25px rgba(0, 229, 255, 0.25);
+      position: relative;
     }
 
     .header-right {
-        position: absolute;
-        right: 24px;
-        top: 50%;
-        transform: translateY(-50%);
-        display: flex;
-        align-items: center;
-        gap: 14px;
+      position: absolute;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      gap: 14px;
     }
 
     .header-right .user-name {
-        font-size: 14px;
-        opacity: 0.8;
-        font-weight: normal;
+      font-size: 14px;
+      opacity: 0.8;
+      font-weight: normal;
     }
 
     .logout-btn {
-        padding: 6px 16px;
-        background: rgba(255,255,255,0.15);
-        border: 1px solid rgba(255,255,255,0.25);
-        color: white;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 13px;
-        transition: 0.2s;
+      padding: 6px 16px;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: 0.2s;
     }
 
     .logout-btn:hover {
-        background: rgba(255,0,0,0.3);
-        border-color: rgba(255,0,0,0.5);
+      background: rgba(255,0,0,0.3);
+      border-color: rgba(255,0,0,0.5);
     }
 
     .time-box {
-        margin-top: 6px;
-        font-size: 13px;
-        font-family: monospace;
-        opacity: 0.85;
+      margin-top: 6px;
+      font-size: 13px;
+      font-family: monospace;
+      opacity: 0.85;
     }
 
     .container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 18px;
-        padding: 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 18px;
+      padding: 24px;
     }
 
     .card {
-        background: rgba(255,255,255,0.05);
-        border: 1px solid rgba(0,229,255,0.15);
-        border-radius: 14px;
-        padding: 16px;
-        backdrop-filter: blur(12px);
-        box-shadow: 0 10px 35px rgba(0,0,0,0.4);
-        transition: 0.25s ease;
-        position: relative;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(0,229,255,0.15);
+      border-radius: 14px;
+      padding: 16px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 35px rgba(0,0,0,0.4);
+      transition: 0.25s ease;
+      position: relative;
     }
 
     .card:hover {
-        transform: translateY(-6px);
-        border-color: rgba(123, 44, 255, 0.5);
-        box-shadow: 0 15px 45px rgba(0,0,0,0.6);
+      transform: translateY(-6px);
+      border-color: rgba(123, 44, 255, 0.5);
+      box-shadow: 0 15px 45px rgba(0,0,0,0.6);
     }
 
     .card h2 {
-        margin-top: 0;
-        font-size: 18px;
-        color: #00e5ff;
-        text-shadow: 0 0 10px rgba(0,229,255,0.25);
+      margin-top: 0;
+      font-size: 18px;
+      color: #00e5ff;
+      text-shadow: 0 0 10px rgba(0,229,255,0.25);
     }
 
     .log {
-        font-size: 14px;
-        line-height: 1.7;
-        opacity: 0.9;
+      font-size: 14px;
+      line-height: 1.7;
+      opacity: 0.9;
     }
 
     .script-box {
-        margin-top: 10px;
-        background: rgba(0,0,0,0.45);
-        padding: 12px;
-        border-radius: 10px;
-        word-break: break-all;
-        font-size: 13px;
-        border: 1px solid rgba(255,255,255,0.08);
-        color: #aef3ff;
-        box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+      margin-top: 10px;
+      background: rgba(0,0,0,0.45);
+      padding: 12px;
+      border-radius: 10px;
+      word-break: break-all;
+      font-size: 13px;
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #aef3ff;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+      white-space: pre-wrap;
     }
 
     .script-item {
-        margin-bottom: 14px;
+      margin-bottom: 14px;
     }
 
     .script-item:last-child {
-        margin-bottom: 0;
+      margin-bottom: 0;
     }
 
     .script-item .script-label {
-        font-size: 13px;
-        font-weight: bold;
-        color: #00e5ff;
-        margin-bottom: 4px;
-        display: block;
+      font-size: 13px;
+      font-weight: bold;
+      color: #00e5ff;
+      margin-bottom: 4px;
+      display: block;
     }
 
     .script-item .script-box {
-        margin-top: 4px;
+      margin-top: 4px;
     }
 
     button {
-        margin-top: 10px;
-        padding: 9px 14px;
-        background: linear-gradient(90deg, #7b2cff, #00e5ff);
-        border: none;
-        color: white;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: bold;
-        transition: 0.2s;
-        box-shadow: 0 0 12px rgba(0,229,255,0.25);
+      margin-top: 10px;
+      padding: 9px 14px;
+      background: linear-gradient(90deg, #7b2cff, #00e5ff);
+      border: none;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.2s;
+      box-shadow: 0 0 12px rgba(0,229,255,0.25);
     }
 
     button:hover {
-        transform: scale(1.06);
-        box-shadow: 0 0 18px rgba(0,229,255,0.55);
+      transform: scale(1.06);
+      box-shadow: 0 0 18px rgba(0,229,255,0.55);
     }
 
     footer {
-        text-align: center;
-        padding: 15px;
-        opacity: 0.5;
-        font-size: 12px;
+      text-align: center;
+      padding: 15px;
+      opacity: 0.5;
+      font-size: 12px;
     }
 
     .main-script {
-        border: 1px solid rgba(0,229,255,0.35);
-        box-shadow: 0 0 25px rgba(0,229,255,0.15);
+      border: 1px solid rgba(0,229,255,0.35);
+      box-shadow: 0 0 25px rgba(0,229,255,0.15);
     }
 
     @media (max-width: 600px) {
-        header {
-            font-size: 18px;
-            padding: 16px;
-        }
-        .header-right {
-            position: static;
-            transform: none;
-            justify-content: center;
-            margin-top: 10px;
-            flex-wrap: wrap;
-        }
-        .login-box {
-            padding: 30px 20px;
-        }
+      header {
+        font-size: 18px;
+        padding: 16px;
+      }
+      .header-right {
+        position: static;
+        transform: none;
+        justify-content: center;
+        margin-top: 10px;
+        flex-wrap: wrap;
+      }
+      .login-box {
+        padding: 30px 20px;
+      }
     }
-</style>
+  </style>
 </head>
 <body>
 
 <div class="login-container" id="loginPage">
-    <div class="login-box">
-        <h1>VOTR</h1>
-        <div class="subtitle">登录以访问脚本中心</div>
-        <div class="form-group">
-            <label>用户名</label>
-            <input type="text" id="loginUser" placeholder="请输入用户名" value="admin">
-        </div>
-        <div class="form-group">
-            <label>密码</label>
-            <input type="password" id="loginPass" placeholder="请输入密码" value="123456">
-        </div>
-        <button class="login-btn" onclick="handleLogin()">登 录</button>
-        <div class="login-error" id="loginError"></div>
-        <div class="register-tip">
-            还没有账号？<span onclick="showRegister()">立即注册</span>
-        </div>
+  <div class="login-box">
+    <h1>VOTR</h1>
+    <div class="subtitle">登录以访问脚本中心</div>
+    <div class="form-group">
+      <label>用户名</label>
+      <input type="text" id="loginUser" placeholder="请输入用户名" value="">
     </div>
+    <div class="form-group">
+      <label>密码</label>
+      <input type="password" id="loginPass" placeholder="请输入密码" value="">
+    </div>
+    <button class="login-btn" onclick="handleLogin()">登 录</button>
+    <div class="login-error" id="loginError"></div>
+    <div class="register-tip">
+      还没有账号？<span onclick="showRegister()">立即注册</span>
+    </div>
+  </div>
 </div>
 
 <div id="registerModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);justify-content:center;align-items:center;z-index:999;">
-    <div class="login-box" style="max-width:400px;margin:20px;">
-        <h1>注册</h1>
-        <div class="subtitle">创建一个新账号</div>
-        <div class="form-group">
-            <label>用户名</label>
-            <input type="text" id="regUser" placeholder="设置用户名">
-        </div>
-        <div class="form-group">
-            <label>密码</label>
-            <input type="password" id="regPass" placeholder="设置密码">
-        </div>
-        <div class="form-group">
-            <label>确认密码</label>
-            <input type="password" id="regPass2" placeholder="再次输入密码">
-        </div>
-        <button class="login-btn" onclick="handleRegister()">注 册</button>
-        <div class="login-error" id="regError"></div>
-        <div class="register-tip">
-            已有账号？<span onclick="closeRegister()">去登录</span>
-        </div>
+  <div class="login-box" style="max-width:400px;margin:20px;">
+    <h1>注册</h1>
+    <div class="subtitle">创建一个新账号</div>
+    <div class="form-group">
+      <label>用户名</label>
+      <input type="text" id="regUser" placeholder="设置用户名">
     </div>
+    <div class="form-group">
+      <label>密码</label>
+      <input type="password" id="regPass" placeholder="设置密码">
+    </div>
+    <div class="form-group">
+      <label>确认密码</label>
+      <input type="password" id="regPass2" placeholder="再次输入密码">
+    </div>
+    <button class="login-btn" onclick="handleRegister()">注 册</button>
+    <div class="login-error" id="regError"></div>
+    <div class="register-tip">
+      已有账号？<span onclick="closeRegister()">去登录</span>
+    </div>
+  </div>
 </div>
 
 <div id="mainApp">
 
-    <header>
-        VOTR脚本网页😍
-        <div class="time-box">SYSTEM TIME: <span id="time"></span></div>
-        <div class="header-right">
-            <span class="user-name" id="displayUser">admin</span>
-            <button class="logout-btn" onclick="handleLogout()">退出</button>
-        </div>
-    </header>
+  <header>
+    VOTR脚本网页😍
+    <div class="time-box">🤔当前时间: <span id="time"></span></div>
+    <div class="header-right">
+      <span class="user-name" id="displayUser">admin</span>
+      <button class="logout-btn" onclick="handleLogout()">退出</button>
+    </div>
+  </header>
 
-    <div class="container">
+  <div class="container">
 
-        <div class="card">
-            <h2>更新日志</h2>
-            <div class="log">
-                • 添加服务器: 自然灾害<br>
-                • 添加服务器: 狙击竞技场<br>
-                • 添加服务器: 行动一<br>
-                • 添加服务器: 踢一个幸运方块<br>
-                • 添加服务器: Doors<br>
-                • 修复部分脚本兼容性<br>
-                感谢您的支持
-            </div>
-        </div>
-
-        <div class="card main-script">
-            <h2>主脚本</h2>
-            <div class="script-box" id="script1">
-VOTR = "887502203"
-loadstring(game:HttpGet("https://raw.githubusercontent.com/VOTR-HUB/MAIN/refs/heads/main/VOTR-MAIN"))()
-            </div>
-            <button onclick="copyText('script1')">复制脚本</button>
-        </div>
-
-        <div class="card">
-            <h2>作者团队</h2>
-            <div class="log">
-                • 主开发：NiL团队<br>
-                • UI设计：VOTR Team<br>
-                • 脚本维护：空白<br>
-                • 测试：暂无
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>系统状态</h2>
-            <div class="log">
-                状态：Online<br>
-                服务器：Stable<br>
-                延迟：Low<br>
-                版本：v2.5.1
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>更多脚本</h2>
-            <div class="script-item">
-                <span class="script-label">等待添加</span>
-                <div class="script-box" id="script2">广告位</div>
-                <button onclick="copyText('script2')">复制脚本</button>
-            </div>
-            <div class="script-item">
-                <span class="script-label">等待添加</span>
-                <div class="script-box" id="script3">广告位</div>
-                <button onclick="copyText('script3')">复制脚本</button>
-            </div>
-            <div class="script-item">
-                <span class="script-label">等待添加</span>
-                <div class="script-box" id="script4"广告位</div>
-                <button onclick="copyText('script4')">复制脚本</button>
-            </div>
-        </div>
-
+    <div class="card">
+      <h2>更新日志</h2>
+      <div class="log">
+        • 添加服务器: 自然灾害<br>
+        • 添加服务器: 狙击竞技场<br>
+        • 添加服务器: 行动一<br>
+        • 添加服务器: 踢一个幸运方块<br>
+        • 添加服务器: Doors<br>
+        • 修复部分脚本兼容性<br>
+        感谢您的支持
+      </div>
     </div>
 
-    <footer>
-        © 2026 VOTR-HUB
-    </footer>
+    <div class="card main-script">
+      <h2>主脚本</h2>
+      <div class="script-box" id="script1">
+VOTR = "887502203"
+loadstring(game:HttpGet("https://raw.githubusercontent.com/VOTR-HUB/MAIN/refs/heads/main/VOTR-MAIN"))()
+      </div>
+      <button onclick="copyText('script1')">复制脚本</button>
+    </div>
+
+    <div class="card">
+      <h2>作者团队</h2>
+      <div class="log">
+        • 主开发：NiL团队<br>
+        • UI设计：VOTR Team<br>
+        • 脚本维护：空白<br>
+        • 测试：暂无
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>系统状态</h2>
+      <div class="log">
+        状态：Online<br>
+        服务器：Stable<br>
+        延迟：Low<br>
+        版本：v2.5.1
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>更多脚本</h2>
+      <div class="script-item">
+        <span class="script-label">等待添加</span>
+        <div class="script-box" id="script2">广告位</div>
+        <button onclick="copyText('script2')">复制脚本</button>
+      </div>
+      <div class="script-item">
+        <span class="script-label">等待添加</span>
+        <div class="script-box" id="script3">广告位</div>
+        <button onclick="copyText('script3')">复制脚本</button>
+      </div>
+      <div class="script-item">
+        <span class="script-label">等待添加</span>
+        <div class="script-box" id="script4">广告位</div>
+        <button onclick="copyText('script4')">复制脚本</button>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    © 2026 VOTR-HUB
+  </footer>
 </div>
 
 <script>
-    function updateTime() {
-        document.getElementById("time").innerText = new Date().toLocaleString();
+  function updateTime() {
+    document.getElementById("time").innerText = new Date().toLocaleString();
+  }
+  setInterval(updateTime, 1000);
+  updateTime();
+
+  function copyText(id) {
+    const element = document.getElementById(id);
+    if (!element) return;
+    const text = element.innerText.trim();
+    navigator.clipboard.writeText(text).then(() => {
+      alert("脚本已复制！");
+    }).catch(() => {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      alert("脚本已复制！");
+    });
+  }
+
+  function getUsers() {
+    const data = localStorage.getItem("votr_users");
+    return data ? JSON.parse(data) : { "V": "91" };
+  }
+
+  function saveUsers(users) {
+    localStorage.setItem("votr_users", JSON.stringify(users));
+  }
+
+  function setCurrentUser(username) {
+    if (username) {
+      localStorage.setItem("votr_current_user", username);
+    } else {
+      localStorage.removeItem("votr_current_user");
     }
-    setInterval(updateTime, 1000);
-    updateTime();
+  }
 
-    function copyText(id) {
-        const text = document.getElementById(id).innerText;
-        navigator.clipboard.writeText(text.trim());
-        alert("脚本已复制！");
-    }
+  function handleLogin() {
+    const username = document.getElementById("loginUser").value.trim();
+    const password = document.getElementById("loginPass").value.trim();
+    const errorEl = document.getElementById("loginError");
 
-    function getUsers() {
-        const data = localStorage.getItem("votr_users");
-        return data ? JSON.parse(data) : { "admin": "123456" };
-    }
-
-    function saveUsers(users) {
-        localStorage.setItem("votr_users", JSON.stringify(users));
-    }
-
-    function setCurrentUser(username) {
-        if (username) {
-            localStorage.setItem("votr_current_user", username);
-        } else {
-            localStorage.removeItem("votr_current_user");
-        }
-    }
-
-    function handleLogin() {
-        const username = document.getElementById("loginUser").value.trim();
-        const password = document.getElementById("loginPass").value.trim();
-        const errorEl = document.getElementById("loginError");
-
-        if (!username || !password) {
-            errorEl.textContent = "请输入用户名和密码";
-            return;
-        }
-
-        const users = getUsers();
-        if (users[username] && users[username] === password) {
-            setCurrentUser(username);
-            document.getElementById("displayUser").textContent = username;
-            document.getElementById("loginPage").style.display = "none";
-            document.getElementById("mainApp").style.display = "block";
-            errorEl.textContent = "";
-        } else {
-            errorEl.textContent = "用户名或密码错误";
-        }
-    }
-
-    function showRegister() {
-        document.getElementById("registerModal").style.display = "flex";
-        document.getElementById("regError").textContent = "";
-        document.getElementById("regUser").value = "";
-        document.getElementById("regPass").value = "";
-        document.getElementById("regPass2").value = "";
+    if (!username || !password) {
+      errorEl.textContent = "请输入用户名和密码";
+      return;
     }
 
-    function closeRegister() {
-        document.getElementById("registerModal").style.display = "none";
+    const users = getUsers();
+    if (users[username] && users[username] === password) {
+      setCurrentUser(username);
+      document.getElementById("displayUser").textContent = username;
+      document.getElementById("loginPage").style.display = "none";
+      document.getElementById("mainApp").style.display = "block";
+      errorEl.textContent = "";
+    } else {
+      errorEl.textContent = "用户名或密码错误";
+    }
+  }
+
+  function showRegister() {
+    document.getElementById("registerModal").style.display = "flex";
+    document.getElementById("regError").textContent = "";
+    document.getElementById("regUser").value = "";
+    document.getElementById("regPass").value = "";
+    document.getElementById("regPass2").value = "";
+  }
+
+  function closeRegister() {
+    document.getElementById("registerModal").style.display = "none";
+  }
+
+  function handleRegister() {
+    const username = document.getElementById("regUser").value.trim();
+    const password = document.getElementById("regPass").value.trim();
+    const password2 = document.getElementById("regPass2").value.trim();
+    const errorEl = document.getElementById("regError");
+
+    if (!username || !password || !password2) {
+      errorEl.textContent = "请填写完整信息";
+      return;
+    }
+    if (username.length < 2) {
+      errorEl.textContent = "用户名至少2个字符";
+      return;
+    }
+    if (password.length < 3) {
+      errorEl.textContent = "密码至少3个字符";
+      return;
+    }
+    if (password !== password2) {
+      errorEl.textContent = "两次密码输入不一致";
+      return;
     }
 
-    function handleRegister() {
-        const username = document.getElementById("regUser").value.trim();
-        const password = document.getElementById("regPass").value.trim();
-        const password2 = document.getElementById("regPass2").value.trim();
-        const errorEl = document.getElementById("regError");
-
-        if (!username || !password || !password2) {
-            errorEl.textContent = "请填写完整信息";
-            return;
-        }
-        if (username.length < 2) {
-            errorEl.textContent = "用户名至少2个字符";
-            return;
-        }
-        if (password.length < 3) {
-            errorEl.textContent = "密码至少3个字符";
-            return;
-        }
-        if (password !== password2) {
-            errorEl.textContent = "两次密码输入不一致";
-            return;
-        }
-
-        const users = getUsers();
-        if (users[username]) {
-            errorEl.textContent = "用户名已存在";
-            return;
-        }
-
-        users[username] = password;
-        saveUsers(users);
-        alert("注册成功！请登录");
-        closeRegister();
-        document.getElementById("loginUser").value = username;
-        document.getElementById("loginPass").value = password;
-        document.getElementById("loginError").textContent = "";
+    const users = getUsers();
+    if (users[username]) {
+      errorEl.textContent = "用户名已存在";
+      return;
     }
 
-    function handleLogout() {
-        setCurrentUser(null);
-        document.getElementById("mainApp").style.display = "none";
-        document.getElementById("loginPage").style.display = "flex";
-        document.getElementById("loginPass").value = "";
-        document.getElementById("loginError").textContent = "";
+    users[username] = password;
+    saveUsers(users);
+    alert("注册成功！请登录");
+    closeRegister();
+    document.getElementById("loginUser").value = username;
+    document.getElementById("loginPass").value = password;
+    document.getElementById("loginError").textContent = "";
+  }
+
+  function handleLogout() {
+    setCurrentUser(null);
+    document.getElementById("mainApp").style.display = "none";
+    document.getElementById("loginPage").style.display = "flex";
+    document.getElementById("loginPass").value = "";
+    document.getElementById("loginError").textContent = "";
+  }
+
+  (function autoLogin() {
+    const saved = localStorage.getItem("votr_current_user");
+    if (saved) {
+      const users = getUsers();
+      if (users[saved]) {
+        document.getElementById("displayUser").textContent = saved;
+        document.getElementById("loginPage").style.display = "none";
+        document.getElementById("mainApp").style.display = "block";
+        return;
+      } else {
+        localStorage.removeItem("votr_current_user");
+      }
     }
 
-    if (localStorage.getItem("votr_current_user")) {
-        const username = localStorage.getItem("votr_current_user");
-        const users = getUsers();
-        if (users[username]) {
-            document.getElementById("displayUser").textContent = username;
-            document.getElementById("loginPage").style.display = "none";
-            document.getElementById("mainApp").style.display = "block";
-        } else {
-            localStorage.removeItem("votr_current_user");
-        }
-    }
+    document.getElementById("loginPage").style.display = "flex";
+    document.getElementById("mainApp").style.display = "none";
+  })();
 </script>
 
 </body>
