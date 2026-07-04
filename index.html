@@ -1,1 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Roblox Script Hub</title>
 
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: radial-gradient(circle at top, #141427, #0b0b12);
+        color: white;
+        overflow-x: hidden;
+    }
+
+    header {
+        background: linear-gradient(90deg, #7b2cff, #00e5ff);
+        padding: 22px;
+        text-align: center;
+        font-size: 26px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        box-shadow: 0 0 25px rgba(0, 229, 255, 0.25);
+    }
+
+    .time-box {
+        margin-top: 6px;
+        font-size: 13px;
+        font-family: monospace;
+        opacity: 0.85;
+    }
+
+    .container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 18px;
+        padding: 24px;
+    }
+
+    .card {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(0,229,255,0.15);
+        border-radius: 14px;
+        padding: 16px;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 10px 35px rgba(0,0,0,0.4);
+        transition: 0.25s ease;
+        position: relative;
+    }
+
+    .card:hover {
+        transform: translateY(-6px);
+        border-color: rgba(123, 44, 255, 0.5);
+        box-shadow: 0 15px 45px rgba(0,0,0,0.6);
+    }
+
+    .card h2 {
+        margin-top: 0;
+        font-size: 18px;
+        color: #00e5ff;
+        text-shadow: 0 0 10px rgba(0,229,255,0.25);
+    }
+
+    .log {
+        font-size: 14px;
+        line-height: 1.7;
+        opacity: 0.9;
+    }
+
+    .script-box {
+        margin-top: 10px;
+        background: rgba(0,0,0,0.45);
+        padding: 12px;
+        border-radius: 10px;
+        word-break: break-all;
+        font-size: 13px;
+        border: 1px solid rgba(255,255,255,0.08);
+        color: #aef3ff;
+        box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    button {
+        margin-top: 10px;
+        padding: 9px 14px;
+        background: linear-gradient(90deg, #7b2cff, #00e5ff);
+        border: none;
+        color: white;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.2s;
+        box-shadow: 0 0 12px rgba(0,229,255,0.25);
+    }
+
+    button:hover {
+        transform: scale(1.06);
+        box-shadow: 0 0 18px rgba(0,229,255,0.55);
+    }
+
+    footer {
+        text-align: center;
+        padding: 15px;
+        opacity: 0.5;
+        font-size: 12px;
+    }
+
+    /* 主脚本卡片强调 */
+    .main-script {
+        border: 1px solid rgba(0,229,255,0.35);
+        box-shadow: 0 0 25px rgba(0,229,255,0.15);
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    😍 VOTR脚本网页
+    <div class="time-box">SYSTEM TIME: <span id="time"></span></div>
+</header>
+
+<div class="container">
+
+    <!-- 更新日志 -->
+    <div class="card">
+        <h2>📢 更新日志</h2>
+        <div class="log">
+            * 更新自然灾害
+            * 更新狙击竞技场
+            * 更新Doors
+            * 更新踢一个幸运方块
+            * 更新行动一
+            
+            
+        </div>
+    </div>
+
+    <!-- 主脚本 -->
+    <div class="card main-script">
+        <h2>📜 主脚本</h2>
+
+        <div class="script-box" id="script1">
+VOTR = "887502203"
+loadstring(game:HttpGet("https://raw.githubusercontent.com/VOTR-HUB/MAIN/refs/heads/main/VOTR-MAIN"))()
+        </div>
+
+        <button onclick="copyText('script1')">复制脚本</button>
+    </div>
+
+    <!-- 作者团队 -->
+    <div class="card">
+        <h2>👨‍💻 作者团队</h2>
+        <div class="log">
+            • 主开发：NiL团队<br>
+            • UI设计：VOTR Team<br>
+            • 脚本维护：空白<br>
+            • 测试：暂无(招测试)
+        </div>
+    </div>
+
+    <!-- 系统信息 -->
+    <div class="card">
+        <h2>🕒 系统状态</h2>
+        <div class="log">
+            状态：🟢 运行中<br>
+            服务器：稳定<br>
+            延迟：低<br>
+            区域：中国
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    © 2026 VOTR TEAM
+</footer>
+
+<script>
+function updateTime() {
+    const now = new Date();
+    document.getElementById("time").innerText =
+        now.toLocaleString();
+}
+setInterval(updateTime, 1000);
+updateTime();
+
+function copyText(id) {
+    const text = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(text.trim());
+    alert("脚本已复制！");
+}
+</script>
+
+</body>
+</html>
