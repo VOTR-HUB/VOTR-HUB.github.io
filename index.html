@@ -11,7 +11,7 @@
       box-sizing: border-box;
     }
     body {
-      font-family: Arial, sans-serif;
+      font-family: Arial, "Microsoft YaHei", sans-serif;
       background: radial-gradient(circle at top, #141427, #0b0b12);
       color: white;
       min-height: 100vh;
@@ -104,10 +104,14 @@
       font-weight: bold;
       transition: 0.2s;
       box-shadow: 0 0 12px rgba(0,229,255,0.25);
+      touch-action: manipulation;
     }
     button:hover {
       transform: scale(1.06);
       box-shadow: 0 0 18px rgba(0,229,255,0.55);
+    }
+    button:active {
+      transform: scale(0.95);
     }
     footer {
       text-align: center;
@@ -137,10 +141,14 @@
       transition: 0.3s ease;
       letter-spacing: 2px;
       margin-bottom: 16px;
+      touch-action: manipulation;
     }
     .qq-group-btn:hover {
       transform: scale(1.03);
       box-shadow: 0 8px 50px rgba(255, 210, 0, 0.8);
+    }
+    .qq-group-btn:active {
+      transform: scale(0.97);
     }
 
     @media (max-width: 600px) {
@@ -193,7 +201,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/VOTR-HUB/MAIN/refs/he
       • 主开发：NiL团队<br>
       • UI设计：VOTR Team<br>
       • 脚本维护：空白<br>
-      • 测试：暂无
+      • 测试：招募中
     </div>
   </div>
 
@@ -203,7 +211,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/VOTR-HUB/MAIN/refs/he
       状态：Online<br>
       服务器：Stable<br>
       延迟：Low<br>
-      版本：v2.5.1
+      版本：v2.5.2
     </div>
   </div>
 
@@ -234,27 +242,112 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/VOTR-HUB/MAIN/refs/he
 
 <script>
   function updateTime() {
-    document.getElementById("time").innerText = new Date().toLocaleString();
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    document.getElementById("time").innerText = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   }
   setInterval(updateTime, 1000);
   updateTime();
 
   function copyText(id) {
     const element = document.getElementById(id);
-    if (!element) return;
+    if (!element) {
+      alert("❌ 未找到要复制的内容");
+      return;
+    }
     const text = element.innerText.trim();
-    navigator.clipboard.writeText(text).then(() => {
-      alert("脚本已复制！");
-    }).catch(() => {
-      const textarea = document.createElement('textarea');
-      textarea.value = text;
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textarea);
-      alert("脚本已复制！");
-    });
+    
+    // 优先使用现代 Clipboard API
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text)
+        .then(() => {
+          showToast("✅ 脚本已复制！");
+        })
+        .catch(() => {
+          fallbackCopy(text);
+        });
+    } else {
+      fallbackCopy(text);
+    }
   }
+
+  function fallbackCopy(text) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    textarea.style.left = '-9999px';
+    textarea.style.top = '-9999px';
+    textarea.style.width = '1px';
+    textarea.style.height = '1px';
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+    
+    try {
+      const success = document.execCommand('copy');
+      if (success) {
+        showToast("✅ 脚本已复制！");
+      } else {
+        showToast("❌ 复制失败，请手动复制");
+      }
+    } catch (err) {
+      showToast("❌ 复制失败，请手动复制");
+    }
+    document.body.removeChild(textarea);
+  }
+
+  function showToast(message) {
+    // 创建临时提示
+    const toast = document.createElement('div');
+    toast.textContent = message;
+    toast.style.cssText = `
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.8);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 16px;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0,229,255,0.2);
+      animation: fadeInUp 0.3s ease;
+      pointer-events: none;
+    `;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transition = 'opacity 0.3s ease';
+      setTimeout(() => {
+        document.body.removeChild(toast);
+      }, 300);
+    }, 2000);
+  }
+
+  // 添加动画
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+  `;
+  document.head.appendChild(style);
 </script>
 
 </body>
