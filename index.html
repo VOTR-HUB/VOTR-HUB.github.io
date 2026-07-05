@@ -235,7 +235,6 @@
       margin-right: 8px;
     }
 
-    /* 新增的反馈卡片样式 */
     .feedback-area {
       margin: 16px 0 12px 0;
       border-top: 1px solid rgba(0,229,255,0.15);
@@ -379,15 +378,14 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/VOTR-HUB/MAIN/refs/he
     </div>
   </div>
 
-  <!-- 在“更多脚本”上方新增的反馈卡片 -->
   <div class="card">
     <h2>📬 希望更新的服务器脚本名称</h2>
     <div class="feedback-area">
       <label for="serverFeedback">输入你希望添加或更新的服务器脚本名称</label>
       <input type="text" id="serverFeedback" placeholder="例如：BedWars、BloxFruits、Arsenal..." />
-      <button class="submit-feedback" id="submitFeedbackBtn">📤 提交建议至 Discord</button>
+      <button class="submit-feedback" id="submitFeedbackBtn">📤 提交建议至 开发者中心</button>
       <div style="margin-top: 12px; font-size: 13px; opacity: 0.6; display: flex; gap: 8px; flex-wrap: wrap;">
-        <span>✨ 你的反馈将帮助 VOTR 团队优化脚本</span>
+        <span>✨ 你的反馈将帮助 VOTR HUB优化脚本</span>
       </div>
     </div>
   </div>
@@ -418,7 +416,6 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/VOTR-HUB/MAIN/refs/he
 </footer>
 
 <script>
-  // 时间更新
   function updateTime() {
     const now = new Date();
     const year = now.getFullYear();
@@ -432,7 +429,6 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/VOTR-HUB/MAIN/refs/he
   setInterval(updateTime, 1000);
   updateTime();
 
-  // 复制功能
   function copyText(id) {
     const element = document.getElementById(id);
     if (!element) {
@@ -506,7 +502,6 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/VOTR-HUB/MAIN/refs/he
   `;
   document.head.appendChild(style);
 
-  // ---------- 新增：Discord Webhook 提交逻辑 ----------
   document.getElementById('submitFeedbackBtn').addEventListener('click', function(e) {
     const input = document.getElementById('serverFeedback');
     const value = input.value.trim();
@@ -516,14 +511,12 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/VOTR-HUB/MAIN/refs/he
       return;
     }
 
-    // 禁用按钮防止重复提交
     const btn = e.currentTarget;
     btn.disabled = true;
     btn.textContent = '⏳ 提交中...';
 
     const webhookUrl = 'https://discord.com/api/webhooks/1501817051692666960/O64hwylgFc7roeBs9C0i0zWEdArD8OfdQnRNSR1ooaP-j5CyOgc9SVyjrcYiQ5K67ro6';
 
-    // 构建 payload (Discord 消息格式)
     const payload = {
       content: `📢 **新的脚本建议**\n> ${value}`,
       embeds: [
@@ -548,8 +541,8 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/VOTR-HUB/MAIN/refs/he
     })
     .then(response => {
       if (response.ok) {
-        showToast('✅ 建议已发送至 Discord！感谢反馈');
-        input.value = ''; // 清空输入
+        showToast('✅ 建议已发给开发者！感谢反馈');
+        input.value = '';
       } else {
         showToast('❌ 提交失败，请稍后重试 (状态: ' + response.status + ')');
       }
@@ -560,7 +553,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/VOTR-HUB/MAIN/refs/he
     })
     .finally(() => {
       btn.disabled = false;
-      btn.textContent = '📤 提交建议至 Discord';
+      btn.textContent = '📤 提交建议至 开发者中心';
     });
   });
 
