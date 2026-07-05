@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>VOTR HUB · 牛逼脚本</title>
+  <title>VOTR HUB · 脚本导航</title>
   <style>
     * {
       margin: 0;
@@ -225,6 +225,7 @@
       background: linear-gradient(90deg, rgba(100, 160, 255, 0.2), transparent);
     }
 
+    /* ===== 主页：更新日志 ===== */
     .log-list {
       list-style: none;
       padding: 0;
@@ -237,13 +238,17 @@
       font-size: 14px;
       line-height: 1.6;
       color: #c6d8f5;
-      padding: 6px 12px;
+      padding: 8px 14px;
       background: rgba(255, 255, 255, 0.02);
       border-radius: 12px;
       border-left: 2px solid rgba(100, 160, 255, 0.15);
       display: flex;
       align-items: baseline;
       gap: 8px;
+      transition: 0.2s;
+    }
+    .log-list li:hover {
+      background: rgba(255, 255, 255, 0.05);
     }
     .log-list li .date-badge {
       font-size: 12px;
@@ -256,6 +261,7 @@
       font-family: monospace;
     }
 
+    /* ===== 脚本列表（注入器页面） ===== */
     .script-list {
       display: flex;
       flex-direction: column;
@@ -371,6 +377,7 @@
     .status-dot.yellow { background: #f1c40f; box-shadow: 0 0 6px #f1c40faa; }
     .status-dot.blue { background: #3498db; box-shadow: 0 0 6px #3498dbaa; }
 
+    /* ===== 反馈区域（主页） ===== */
     .feedback-area {
       margin-top: 6px;
       display: flex;
@@ -458,6 +465,107 @@
       opacity: 0.6;
     }
 
+    /* ===== 主页卡片美化 ===== */
+    .home-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 6px;
+    }
+    .home-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(0, 229, 255, 0.06);
+      border-radius: 20px;
+      padding: 20px 22px;
+      transition: 0.25s ease;
+    }
+    .home-card:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(0, 229, 255, 0.15);
+    }
+    .home-card .card-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #b8d4ff;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .home-card .card-title .badge {
+      font-size: 11px;
+      font-weight: 400;
+      color: #6a7fa0;
+      background: rgba(255,255,255,0.04);
+      padding: 0 10px;
+      border-radius: 40px;
+    }
+
+    .feedback-box {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .feedback-box .fb-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .feedback-box .fb-row input {
+      flex: 1;
+      min-width: 140px;
+      padding: 10px 16px;
+      border-radius: 40px;
+      border: 1px solid rgba(0, 229, 255, 0.10);
+      background: rgba(0, 0, 0, 0.3);
+      color: white;
+      font-size: 14px;
+      outline: none;
+      transition: 0.2s;
+    }
+    .feedback-box .fb-row input:focus {
+      border-color: #7aa9ff;
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.06);
+      background: rgba(0, 0, 0, 0.5);
+    }
+    .feedback-box .fb-row input::placeholder {
+      color: rgba(255, 255, 255, 0.2);
+    }
+    .feedback-box .fb-row .btn-fb {
+      padding: 10px 24px;
+      background: linear-gradient(90deg, #7b2cff, #00e5ff);
+      border: none;
+      border-radius: 40px;
+      color: white;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.2s;
+      white-space: nowrap;
+    }
+    .feedback-box .fb-row .btn-fb:hover { transform: scale(1.03); box-shadow: 0 0 24px rgba(0, 229, 255, 0.15); }
+    .feedback-box .fb-row .btn-fb:active { transform: scale(0.96); }
+
+    .home-card .log-mini {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .home-card .log-mini .log-item {
+      font-size: 13px;
+      color: #b0c8e8;
+      padding: 4px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+      display: flex;
+      gap: 10px;
+    }
+    .home-card .log-mini .log-item .d {
+      color: #6a8fb0;
+      font-size: 11px;
+      white-space: nowrap;
+      font-family: monospace;
+    }
+
     @media (max-width: 700px) {
       .welcome-card { padding: 32px 20px; }
       .welcome-card h1 { font-size: 32px; }
@@ -465,6 +573,7 @@
       .header .title { font-size: 22px; }
       .script-entry { flex-direction: column; align-items: stretch; }
       .code-snip { max-width: 100%; }
+      .home-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -494,10 +603,10 @@
     </div>
 
     <div class="nav-tabs" id="navTabs">
-      <span class="active" data-tab="tab-home">主页</span>
-      <span data-tab="tab-profile">个人信息</span>
-      <span data-tab="tab-injector">注入器</span>
-      <span data-tab="tab-bg">背景</span>
+      <span class="active" data-tab="tab-home">🏠 主页</span>
+      <span data-tab="tab-injector">💉 注入器</span>
+      <span data-tab="tab-profile">👤 个人信息</span>
+      <span data-tab="tab-bg">🎨 背景</span>
     </div>
 
     <div id="tab-home" class="tab-content active">
@@ -505,15 +614,62 @@
         ⚠️ 本脚本仅供学习与交流使用 · 使用VOTR脚本所产生的任何后果由用户自行承担
       </div>
 
-      <div class="section-label">📋 更新日志</div>
-      <ul class="log-list">
-        <li><span class="date-badge">2026-07-05</span><span class="log-text">踢一个幸运方块 已完善 · 后示录 已完善 · 更新森林99夜，通宵 · 优化躲避海啸 已自动回收</span></li>
-        <li><span class="date-badge">2026-07-04</span><span class="log-text">版本 2.0 · 修复狙击竞技场，更新po大po、动物医院，修复ohio传送</span></li>
-        <li><span class="date-badge">2026-07-02</span><span class="log-text">版本 1.9 · 新增支持「踢一个幸运方块」服务器，优化脚本加载</span></li>
-        <li><span class="date-badge">2026-06-30</span><span class="log-text">版本 1.8 · 修复Doors服务器兼容性问题，标记为谨慎使用</span></li>
-      </ul>
+      <div class="home-grid">
+        <div class="home-card">
+          <div class="card-title">📋 更新日志 <span class="badge">最新</span></div>
+          <div class="log-mini">
+            <div class="log-item"><span class="d">2026-07-06</span> 版本 1.5 · 新增动物医院以及烧烤战斗</span>
+            <div class="log-item"><span class="d">2026-07-05</span> 版本 1.4 · 修复狙击竞技场，更新po大po</div>
+            <div class="log-item"><span class="d">2026-07-05</span> 版本 1.3 · 新增「踢一个幸运方块」服务器</div>
+            <div class="log-item"><span class="d">2026-07-05</span> 版本 1.2 · 修复Doors兼容性问题</div>
+            <div class="log-item"><span class="d">2026-07-05</span> 版本 1.1 · 新增chain、行动一</div>
+            <div class="log-item"><span class="d">2026-07-05</span> 版本 1.0 · VOTR诞生</div>
+          </div>
+        </div>
 
-      <div class="section-label">📜 脚本列表</div>
+        <div class="home-card">
+          <div class="card-title">📬 反馈与社群</div>
+          <div class="feedback-box">
+            <div class="fb-row">
+              <input type="text" id="serverFeedback" placeholder="输入希望更新的脚本名称..." />
+            </div>
+            <div class="fb-row" style="justify-content:space-between;">
+              <button class="btn-fb" id="submitFeedbackBtn">📤 提交建议</button>
+              <a href="https://qm.qq.com/q/x9AfF64NbO" target="_blank" class="qq-group-btn">📢 加入QQ群</a>
+            </div>
+            <div style="font-size:12px; opacity:0.4; margin-top:4px;">
+              你的反馈将帮助 VOTR HUB 优化脚本
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:18px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.04);">
+        <div style="display:flex; flex-wrap:wrap; gap:12px; align-items:center;">
+          <span style="font-size:13px; color:#6a7fa0;">🖥️ 服务器状态</span>
+          <span class="server-tag"><span class="status-dot green"></span>Ohio</span>
+          <span class="server-tag"><span class="status-dot green"></span>狙击竞技场</span>
+          <span class="server-tag"><span class="status-dot green"></span>动物医院</span>
+          <span class="server-tag"><span class="status-dot green"></span>po大po</span>
+          <span class="server-tag"><span class="status-dot green"></span>Doors</span>
+          <span class="server-tag"><span class="status-dot green"></span>踢一个幸运方块</span>
+          <span class="server-tag"><span class="status-dot red"></span>通缉</span>
+          <span class="server-tag"><span class="status-dot yellow"></span>chain</span>
+          <span class="server-tag"><span class="status-dot green"></span>行动一</span>
+          <span class="server-tag"><span class="status-dot green"></span>自然灾害</span>
+          <span class="server-tag"><span class="status-dot green"></span>烧烤战斗</span>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:14px; margin-top:6px; font-size:12px; opacity:0.5;">
+          <span><span class="status-dot green" style="width:10px;height:10px;display:inline-block;vertical-align:middle;"></span> 稳定</span>
+          <span><span class="status-dot red" style="width:10px;height:10px;display:inline-block;vertical-align:middle;"></span> 谨慎使用</span>
+          <span><span class="status-dot yellow" style="width:10px;height:10px;display:inline-block;vertical-align:middle;"></span> 修复中</span>
+          <span><span class="status-dot blue" style="width:10px;height:10px;display:inline-block;vertical-align:middle;"></span> 已删除</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-injector" class="tab-content">
+      <div class="section-label">💉 脚本列表</div>
       <div class="script-list">
 
         <div class="script-entry">
@@ -572,17 +728,6 @@
           </div>
         </div>
 
-        <div class="script-entry" style="flex-direction:column; align-items:stretch; gap:10px;">
-          <div style="display:flex; flex-wrap:wrap; justify-content:space-between; width:100%;">
-            <span class="name" style="font-size:16px;">📬 希望更新的服务器脚本</span>
-            <a href="https://qm.qq.com/q/x9AfF64NbO" target="_blank" class="qq-group-btn">📢 加入QQ群</a>
-          </div>
-          <div class="feedback-area">
-            <input type="text" id="serverFeedback" placeholder="例如：BedWars、BloxFruits..." />
-            <button class="btn-feedback" id="submitFeedbackBtn">提交建议</button>
-          </div>
-        </div>
-
       </div>
     </div>
 
@@ -591,21 +736,12 @@
         <span class="icon">👤</span>
         <h3>个人信息</h3>
         <p>用户名：VOTR_User</p>
-        <p>骚货程度: 特别骚</p>
+        <p>等级：高级用户</p>
+        <p>注册时间：2026-01-15</p>
         <p style="margin-top:12px; opacity:0.4;">更多功能开发中...</p>
       </div>
     </div>
-
-    <div id="tab-injector" class="tab-content">
-      <div class="info-placeholder">
-        <span class="icon">💉</span>
-        <h3>注入器</h3>
-        <p>当前状态：<span style="color:#2ecc71;">● 在线</span></p>
-        <p>支持平台：Roblox</p>
-        <p style="margin-top:12px; opacity:0.4;">注入器配置面板开发中...</p>
-      </div>
-    </div>
-
+    
     <div id="tab-bg" class="tab-content">
       <div class="info-placeholder">
         <span class="icon">🎨</span>
@@ -643,8 +779,8 @@
     const navTabs = document.querySelectorAll('.nav-tabs span');
     const tabContents = {
       'tab-home': document.getElementById('tab-home'),
-      'tab-profile': document.getElementById('tab-profile'),
       'tab-injector': document.getElementById('tab-injector'),
+      'tab-profile': document.getElementById('tab-profile'),
       'tab-bg': document.getElementById('tab-bg')
     };
 
@@ -765,7 +901,7 @@
       .catch(() => showToast('❌ 网络错误，请重试'))
       .finally(() => {
         btn.disabled = false;
-        btn.textContent = '提交建议';
+        btn.textContent = '📤 提交建议';
       });
     });
 
