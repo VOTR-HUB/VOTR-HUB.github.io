@@ -102,6 +102,53 @@
     .btn-qq:hover {
       box-shadow: 0 12px 40px rgba(255, 210, 0, 0.5);
     }
+    .btn-enter:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: 0 4px 16px rgba(0, 229, 255, 0.08);
+    }
+    .captcha-area {
+      margin: 20px 0 10px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    .captcha-area input {
+      padding: 12px 24px;
+      border-radius: 60px;
+      border: 1px solid rgba(0, 229, 255, 0.15);
+      background: rgba(0, 0, 0, 0.35);
+      color: white;
+      font-size: 16px;
+      outline: none;
+      transition: 0.2s;
+      width: 220px;
+      text-align: center;
+      letter-spacing: 1px;
+      font-weight: 500;
+    }
+    .captcha-area input:focus {
+      border-color: #7aa9ff;
+      box-shadow: 0 0 24px rgba(0, 229, 255, 0.08);
+      background: rgba(0, 0, 0, 0.55);
+    }
+    .captcha-area input::placeholder {
+      color: rgba(255, 255, 255, 0.2);
+      letter-spacing: 0.5px;
+      font-weight: 300;
+    }
+    .captcha-hint {
+      font-size: 13px;
+      color: #6a8fb0;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 4px 16px;
+      border-radius: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      display: inline-block;
+    }
 
     .main-app {
       display: none;
@@ -225,43 +272,6 @@
       background: linear-gradient(90deg, rgba(100, 160, 255, 0.2), transparent);
     }
 
-    /* ===== 主页：更新日志 ===== */
-    .log-list {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 18px 0;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .log-list li {
-      font-size: 14px;
-      line-height: 1.6;
-      color: #c6d8f5;
-      padding: 8px 14px;
-      background: rgba(255, 255, 255, 0.02);
-      border-radius: 12px;
-      border-left: 2px solid rgba(100, 160, 255, 0.15);
-      display: flex;
-      align-items: baseline;
-      gap: 8px;
-      transition: 0.2s;
-    }
-    .log-list li:hover {
-      background: rgba(255, 255, 255, 0.05);
-    }
-    .log-list li .date-badge {
-      font-size: 12px;
-      font-weight: 600;
-      color: #7aa9ff;
-      background: rgba(60, 120, 255, 0.08);
-      padding: 0 10px;
-      border-radius: 40px;
-      white-space: nowrap;
-      font-family: monospace;
-    }
-
-    /* ===== 脚本列表（注入器页面） ===== */
     .script-list {
       display: flex;
       flex-direction: column;
@@ -377,130 +387,6 @@
     .status-dot.yellow { background: #f1c40f; box-shadow: 0 0 6px #f1c40faa; }
     .status-dot.blue { background: #3498db; box-shadow: 0 0 6px #3498dbaa; }
 
-    /* ===== 反馈区域（主页） ===== */
-    .feedback-area {
-      margin-top: 6px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 12px;
-    }
-    .feedback-area input {
-      flex: 1 1 180px;
-      padding: 8px 18px;
-      border-radius: 40px;
-      border: 1px solid rgba(0, 229, 255, 0.12);
-      background: rgba(0, 0, 0, 0.35);
-      color: white;
-      font-size: 14px;
-      outline: none;
-      transition: 0.2s;
-    }
-    .feedback-area input:focus {
-      border-color: #7aa9ff;
-      box-shadow: 0 0 20px rgba(0, 229, 255, 0.08);
-      background: rgba(0, 0, 0, 0.55);
-    }
-    .feedback-area input::placeholder {
-      color: rgba(255, 255, 255, 0.2);
-    }
-    .btn-feedback {
-      padding: 8px 24px;
-      background: linear-gradient(90deg, #7b2cff, #00e5ff);
-      border: none;
-      border-radius: 40px;
-      color: white;
-      font-weight: 600;
-      font-size: 14px;
-      cursor: pointer;
-      transition: 0.2s;
-      box-shadow: 0 0 16px rgba(0, 229, 255, 0.08);
-      touch-action: manipulation;
-      white-space: nowrap;
-    }
-    .btn-feedback:hover { transform: scale(1.03); box-shadow: 0 0 28px rgba(0, 229, 255, 0.2); }
-    .btn-feedback:active { transform: scale(0.96); }
-
-    .qq-group-btn {
-      display: inline-block;
-      padding: 8px 24px;
-      background: linear-gradient(135deg, #f7971e, #ffd200);
-      border: none;
-      border-radius: 40px;
-      color: #1a1a2e;
-      font-weight: 700;
-      font-size: 15px;
-      text-decoration: none;
-      box-shadow: 0 6px 24px rgba(255, 210, 0, 0.15);
-      transition: 0.2s;
-      touch-action: manipulation;
-      white-space: nowrap;
-    }
-    .qq-group-btn:hover { transform: scale(1.03); box-shadow: 0 8px 36px rgba(255, 210, 0, 0.3); }
-    .qq-group-btn:active { transform: scale(0.97); }
-
-    .footer {
-      text-align: center;
-      padding: 20px 12px 8px;
-      opacity: 0.35;
-      font-size: 13px;
-    }
-
-    .info-placeholder {
-      text-align: center;
-      padding: 30px 20px;
-      color: #8899bb;
-    }
-    .info-placeholder .icon {
-      font-size: 48px;
-      margin-bottom: 12px;
-      display: block;
-    }
-    .info-placeholder h3 {
-      color: #b8d4ff;
-      margin-bottom: 8px;
-    }
-    .info-placeholder p {
-      font-size: 14px;
-      opacity: 0.6;
-    }
-
-    /* ===== 主页卡片美化 ===== */
-    .home-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-      margin-top: 6px;
-    }
-    .home-card {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(0, 229, 255, 0.06);
-      border-radius: 20px;
-      padding: 20px 22px;
-      transition: 0.25s ease;
-    }
-    .home-card:hover {
-      background: rgba(255, 255, 255, 0.04);
-      border-color: rgba(0, 229, 255, 0.15);
-    }
-    .home-card .card-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: #b8d4ff;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .home-card .card-title .badge {
-      font-size: 11px;
-      font-weight: 400;
-      color: #6a7fa0;
-      background: rgba(255,255,255,0.04);
-      padding: 0 10px;
-      border-radius: 40px;
-    }
-
     .feedback-box {
       display: flex;
       flex-direction: column;
@@ -546,6 +432,85 @@
     .feedback-box .fb-row .btn-fb:hover { transform: scale(1.03); box-shadow: 0 0 24px rgba(0, 229, 255, 0.15); }
     .feedback-box .fb-row .btn-fb:active { transform: scale(0.96); }
 
+    .qq-group-btn {
+      display: inline-block;
+      padding: 8px 24px;
+      background: linear-gradient(135deg, #f7971e, #ffd200);
+      border: none;
+      border-radius: 40px;
+      color: #1a1a2e;
+      font-weight: 700;
+      font-size: 15px;
+      text-decoration: none;
+      box-shadow: 0 6px 24px rgba(255, 210, 0, 0.15);
+      transition: 0.2s;
+      touch-action: manipulation;
+      white-space: nowrap;
+    }
+    .qq-group-btn:hover { transform: scale(1.03); box-shadow: 0 8px 36px rgba(255, 210, 0, 0.3); }
+    .qq-group-btn:active { transform: scale(0.97); }
+
+    .footer {
+      text-align: center;
+      padding: 20px 12px 8px;
+      opacity: 0.35;
+      font-size: 13px;
+    }
+
+    .info-placeholder {
+      text-align: center;
+      padding: 30px 20px;
+      color: #8899bb;
+    }
+    .info-placeholder .icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .info-placeholder h3 {
+      color: #b8d4ff;
+      margin-bottom: 8px;
+    }
+    .info-placeholder p {
+      font-size: 14px;
+      opacity: 0.6;
+    }
+
+    .home-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 6px;
+    }
+    .home-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(0, 229, 255, 0.06);
+      border-radius: 20px;
+      padding: 20px 22px;
+      transition: 0.25s ease;
+    }
+    .home-card:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(0, 229, 255, 0.15);
+    }
+    .home-card .card-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #b8d4ff;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .home-card .card-title .badge {
+      font-size: 11px;
+      font-weight: 400;
+      color: #6a7fa0;
+      background: rgba(255,255,255,0.04);
+      padding: 0 10px;
+      border-radius: 40px;
+    }
+
     .home-card .log-mini {
       display: flex;
       flex-direction: column;
@@ -574,6 +539,7 @@
       .script-entry { flex-direction: column; align-items: stretch; }
       .code-snip { max-width: 100%; }
       .home-grid { grid-template-columns: 1fr; }
+      .captcha-area input { width: 100%; }
     }
   </style>
 </head>
@@ -587,8 +553,14 @@
     我们提供多款游戏脚本，持续维护，适配最新版本。<br>
     所有脚本均经过测试，请放心使用。
   </p>
+
+  <div class="captcha-area">
+    <input type="text" id="captchaInput" placeholder="防人机，答对进入" autocomplete="off" />
+    <span class="captcha-hint">🔐 答案: 加群获取 887502203</span>
+  </div>
+
   <div class="btn-group">
-    <button class="btn" id="enterBtn">🚀 进入</button>
+    <button class="btn btn-enter" id="enterBtn" disabled>🚀 进入</button>
     <a href="https://qm.qq.com/q/x9AfF64NbO" target="_blank" class="btn btn-qq">📢 加入QQ群</a>
   </div>
 </div>
@@ -604,7 +576,7 @@
 
     <div class="nav-tabs" id="navTabs">
       <span class="active" data-tab="tab-home">🏠 主页</span>
-      <span data-tab="tab-injector">💉 注入器</span>
+      <span data-tab="tab-script">📜 脚本</span>
       <span data-tab="tab-profile">👤 个人信息</span>
       <span data-tab="tab-bg">🎨 背景</span>
     </div>
@@ -618,7 +590,7 @@
         <div class="home-card">
           <div class="card-title">📋 更新日志 <span class="badge">最新</span></div>
           <div class="log-mini">
-            <div class="log-item"><span class="d">2026-07-06</span> 版本 1.5 · 新增动物医院以及烧烤战斗</span>
+            <div class="log-item"><span class="d">2026-07-06</span> 版本 1.5 · 新增动物医院以及烧烤战斗</div>
             <div class="log-item"><span class="d">2026-07-05</span> 版本 1.4 · 修复狙击竞技场，更新po大po</div>
             <div class="log-item"><span class="d">2026-07-05</span> 版本 1.3 · 新增「踢一个幸运方块」服务器</div>
             <div class="log-item"><span class="d">2026-07-05</span> 版本 1.2 · 修复Doors兼容性问题</div>
@@ -668,8 +640,8 @@
       </div>
     </div>
 
-    <div id="tab-injector" class="tab-content">
-      <div class="section-label">💉 脚本列表</div>
+    <div id="tab-script" class="tab-content">
+      <div class="section-label">📜 脚本列表</div>
       <div class="script-list">
 
         <div class="script-entry">
@@ -761,8 +733,29 @@
     const welcome = document.getElementById('welcome');
     const mainApp = document.getElementById('mainApp');
     const enterBtn = document.getElementById('enterBtn');
+    const captchaInput = document.getElementById('captchaInput');
+    const CORRECT = 'VOTRnb';
+
+    function validateCaptcha() {
+      const val = captchaInput.value.trim();
+      if (val === CORRECT) {
+        enterBtn.disabled = false;
+        enterBtn.style.opacity = '1';
+        enterBtn.style.cursor = 'pointer';
+      } else {
+        enterBtn.disabled = true;
+        enterBtn.style.opacity = '0.5';
+        enterBtn.style.cursor = 'not-allowed';
+      }
+    }
+
+    captchaInput.addEventListener('input', validateCaptcha);
+    captchaInput.addEventListener('paste', function() {
+      setTimeout(validateCaptcha, 10);
+    });
 
     enterBtn.addEventListener('click', function() {
+      if (enterBtn.disabled) return;
       welcome.style.display = 'none';
       mainApp.classList.add('active');
     });
@@ -779,7 +772,7 @@
     const navTabs = document.querySelectorAll('.nav-tabs span');
     const tabContents = {
       'tab-home': document.getElementById('tab-home'),
-      'tab-injector': document.getElementById('tab-injector'),
+      'tab-script': document.getElementById('tab-script'),
       'tab-profile': document.getElementById('tab-profile'),
       'tab-bg': document.getElementById('tab-bg')
     };
@@ -905,6 +898,7 @@
       });
     });
 
+    validateCaptcha();
   })();
 </script>
 </body>
