@@ -151,15 +151,93 @@
       transform: scale(0.97);
     }
 
+    .server-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .server-tag {
+      background: rgba(0, 229, 255, 0.10);
+      border: 1px solid rgba(0, 229, 255, 0.25);
+      padding: 6px 14px;
+      border-radius: 40px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #b3f0ff;
+      backdrop-filter: blur(4px);
+      transition: 0.2s;
+      letter-spacing: 0.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .server-tag:hover {
+      background: rgba(123, 44, 255, 0.25);
+      border-color: #7b2cff;
+      transform: scale(1.04);
+      box-shadow: 0 0 20px rgba(123, 44, 255, 0.3);
+    }
+    .status-dot {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .status-dot.green { background: #2ecc71; box-shadow: 0 0 8px #2ecc71aa; }
+    .status-dot.red { background: #e74c3c; box-shadow: 0 0 8px #e74c3caa; }
+    .status-dot.yellow { background: #f1c40f; box-shadow: 0 0 8px #f1c40faa; }
+    .status-dot.blue { background: #3498db; box-shadow: 0 0 8px #3498dbaa; }
+
+    .history-log {
+      margin-top: 18px;
+      border-top: 1px solid rgba(0,229,255,0.15);
+      padding-top: 14px;
+    }
+    .history-log h3 {
+      font-size: 15px;
+      color: #aef3ff;
+      margin-bottom: 8px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+    .scroll-log {
+      max-height: 140px;
+      overflow-y: auto;
+      padding-right: 6px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #c8e6f0;
+      scrollbar-width: thin;
+      scrollbar-color: #7b2cff rgba(255,255,255,0.05);
+    }
+    .scroll-log::-webkit-scrollbar {
+      width: 5px;
+    }
+    .scroll-log::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.05);
+      border-radius: 8px;
+    }
+    .scroll-log::-webkit-scrollbar-thumb {
+      background: #7b2cff;
+      border-radius: 8px;
+    }
+    .scroll-log p {
+      margin-bottom: 4px;
+      border-bottom: 1px dashed rgba(255,255,255,0.04);
+      padding-bottom: 4px;
+    }
+    .scroll-log .date {
+      color: #00e5ff;
+      font-weight: 500;
+      margin-right: 8px;
+    }
+
     @media (max-width: 600px) {
-      header {
-        font-size: 18px;
-        padding: 16px;
-      }
-      .qq-group-btn {
-        font-size: 18px;
-        padding: 16px 0;
-      }
+      header { font-size: 18px; padding: 16px; }
+      .qq-group-btn { font-size: 18px; padding: 16px 0; }
     }
   </style>
 </head>
@@ -167,7 +245,7 @@
 
 <header>
   VOTR脚本网页😍
-  <div class="time-box">🤮😤😎🧐当前时间: <span id="time"></span></div>
+  <div class="time-box">当前时间: <span id="time"></span></div>
 </header>
 
 <div class="container">
@@ -176,11 +254,8 @@
     <a href="https://qm.qq.com/q/x9AfF64NbO" target="_blank" class="qq-group-btn">📢 加入QQ群</a>
     <h2>更新日志</h2>
     <div class="log">
-      • 版本 : 2.0<br>
-      • 修复狙击竞技场<br>
-      • 更新po大po<br>
-      • 更新动物医院<br>
-      • 修复ohio传送问题
+      • 版本 : 2.1<br>
+      • 添加用户协议
     </div>
   </div>
 
@@ -191,6 +266,41 @@ VOTR = "887502203"
 loadstring(game:HttpGet("https://raw.githubusercontent.com/VOTR-HUB/MAIN/refs/heads/main/VOTR-MAIN"))()
     </div>
     <button onclick="copyText('script1')">复制脚本</button>
+
+    <div style="margin-top: 20px; border-top: 1px solid rgba(0,229,255,0.15); padding-top: 16px;">
+      <h2 style="font-size: 17px; margin-bottom: 6px;">🖥️ 支持的服务器</h2>
+      <div class="server-list">
+        <span class="server-tag"><span class="status-dot green"></span>Ohio</span>
+        <span class="server-tag"><span class="status-dot green"></span>狙击竞技场</span>
+        <span class="server-tag"><span class="status-dot yellow"></span>动物医院</span>
+        <span class="server-tag"><span class="status-dot green"></span>po大po</span>
+        <span class="server-tag"><span class="status-dot red"></span>Doors</span>
+        <span class="server-tag"><span class="status-dot green"></span>踢一个幸运方块</span>
+        <span class="server-tag"><span class="status-dot blue"></span>通缉</span>
+        <span class="server-tag"><span class="status-dot green"></span>chain</span>
+        <span class="server-tag"><span class="status-dot yellow"></span>行动一</span>
+        <span class="server-tag"><span class="status-dot red"></span>自然灾害</span>
+      </div>
+      <div style="font-size: 12px; opacity: 0.6; margin-top: 8px; display: flex; flex-wrap: wrap; gap: 10px;">
+        <span><span class="status-dot green" style="width:10px;height:10px;display:inline-block;vertical-align:middle;"></span> 稳定</span>
+        <span><span class="status-dot red" style="width:10px;height:10px;display:inline-block;vertical-align:middle;"></span> 谨慎使用</span>
+        <span><span class="status-dot yellow" style="width:10px;height:10px;display:inline-block;vertical-align:middle;"></span> 修复中</span>
+        <span><span class="status-dot blue" style="width:10px;height:10px;display:inline-block;vertical-align:middle;"></span> 已删除</span>
+      </div>
+
+      <div class="history-log">
+        <h3>📜 历史更新日志</h3>
+        <div class="scroll-log">
+          <p><span class="date">2026-07-05</span> 版本 2.1 · 添加用户协议，优化服务器状态显示</p>
+          <p><span class="date">2026-07-04</span> 版本 2.0 · 修复狙击竞技场，更新po大po、动物医院，修复ohio传送</p>
+          <p><span class="date">2026-07-02</span> 版本 1.9 · 新增支持「踢一个幸运方块」服务器，优化脚本加载</p>
+          <p><span class="date">2026-06-30</span> 版本 1.8 · 修复Doors服务器兼容性问题，标记为谨慎使用</p>
+          <p><span class="date">2026-06-28</span> 版本 1.7 · 新增chain、行动一服务器支持，调整UI配色</p>
+          <p><span class="date">2026-06-25</span> 版本 1.6 · 移除「通缉」服务器（已删除），添加自然灾害（修复中）</p>
+          <p><span class="date">2026-06-22</span> 版本 1.5 · 初始版本发布，支持Ohio、狙击竞技场等基础服务器</p>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="card">
@@ -258,16 +368,10 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/VOTR-HUB/MAIN/refs/he
       return;
     }
     const text = element.innerText.trim();
-    
-    // 优先使用现代 Clipboard API
     if (navigator.clipboard && window.isSecureContext) {
       navigator.clipboard.writeText(text)
-        .then(() => {
-          showToast("✅ 脚本已复制！");
-        })
-        .catch(() => {
-          fallbackCopy(text);
-        });
+        .then(() => showToast("✅ 脚本已复制！"))
+        .catch(() => fallbackCopy(text));
     } else {
       fallbackCopy(text);
     }
@@ -285,22 +389,16 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/VOTR-HUB/MAIN/refs/he
     document.body.appendChild(textarea);
     textarea.focus();
     textarea.select();
-    
     try {
       const success = document.execCommand('copy');
-      if (success) {
-        showToast("✅ 脚本已复制！");
-      } else {
-        showToast("❌ 复制失败，请手动复制");
-      }
-    } catch (err) {
+      showToast(success ? "✅ 脚本已复制！" : "❌ 复制失败，请手动复制");
+    } catch {
       showToast("❌ 复制失败，请手动复制");
     }
     document.body.removeChild(textarea);
   }
 
   function showToast(message) {
-    // 创建临时提示
     const toast = document.createElement('div');
     toast.textContent = message;
     toast.style.cssText = `
@@ -320,28 +418,18 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/VOTR-HUB/MAIN/refs/he
       pointer-events: none;
     `;
     document.body.appendChild(toast);
-    
     setTimeout(() => {
       toast.style.opacity = '0';
       toast.style.transition = 'opacity 0.3s ease';
-      setTimeout(() => {
-        document.body.removeChild(toast);
-      }, 300);
+      setTimeout(() => document.body.removeChild(toast), 300);
     }, 2000);
   }
 
-  // 添加动画
   const style = document.createElement('style');
   style.textContent = `
     @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateX(-50%) translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-      }
+      from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+      to { opacity: 1; transform: translateX(-50%) translateY(0); }
     }
   `;
   document.head.appendChild(style);
