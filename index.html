@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>VOTR HUB 脚本网站</title>
+  <title>VOTR HUB · 脚本导航</title>
   <style>
     * {
       margin: 0;
@@ -11,553 +11,583 @@
       box-sizing: border-box;
     }
     body {
-      font-family: Arial, "Microsoft YaHei", sans-serif;
-      background: radial-gradient(circle at top, #141427, #0b0b12);
-      color: white;
+      font-family: 'Segoe UI', 'Microsoft YaHei', system-ui, sans-serif;
+      background: radial-gradient(circle at 20% 30%, #141427, #0a0a12);
+      color: #f0f4ff;
       min-height: 100vh;
-      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .welcome-card {
+      max-width: 720px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(0, 229, 255, 0.15);
+      border-radius: 48px;
+      padding: 48px 40px 40px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(0, 229, 255, 0.08);
+      text-align: center;
+      transition: 0.3s ease;
+    }
+    .welcome-card h1 {
+      font-size: 44px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #b388ff, #00e5ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+      text-shadow: 0 0 30px rgba(0, 229, 255, 0.15);
+    }
+    .welcome-card .sub {
+      font-size: 18px;
+      color: #b0d4ff;
+      opacity: 0.8;
+      margin-bottom: 24px;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
+      padding-bottom: 20px;
+    }
+    .welcome-card p {
+      font-size: 16px;
+      line-height: 1.7;
+      color: #d4e6ff;
+      margin-bottom: 28px;
+      opacity: 0.9;
+    }
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      justify-content: center;
+      margin-top: 6px;
+    }
+    .btn {
+      padding: 14px 44px;
+      border: none;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 20px;
+      cursor: pointer;
+      transition: 0.2s ease;
+      touch-action: manipulation;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: 0.5px;
+      background: linear-gradient(135deg, #7b2cff, #00e5ff);
+      color: white;
+      box-shadow: 0 8px 28px rgba(0, 229, 255, 0.2);
+    }
+    .btn:hover {
+      transform: scale(1.04);
+      box-shadow: 0 12px 40px rgba(0, 229, 255, 0.4);
+    }
+    .btn:active {
+      transform: scale(0.96);
+    }
+    .btn-qq {
+      background: linear-gradient(135deg, #f7971e, #ffd200);
+      color: #1a1a2e;
+      box-shadow: 0 8px 28px rgba(255, 210, 0, 0.25);
+    }
+    .btn-qq:hover {
+      box-shadow: 0 12px 40px rgba(255, 210, 0, 0.5);
+    }
+    .main-app {
+      display: none;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .main-app.active {
+      display: block;
     }
     header {
       background: linear-gradient(90deg, #7b2cff, #00e5ff);
-      padding: 22px;
+      padding: 20px 24px;
+      border-radius: 40px 40px 20px 20px;
       text-align: center;
       font-size: 26px;
       font-weight: bold;
       letter-spacing: 1px;
-      box-shadow: 0 0 25px rgba(0, 229, 255, 0.25);
-      position: relative;
+      box-shadow: 0 0 35px rgba(0, 229, 255, 0.2);
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header .title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
     .time-box {
-      margin-top: 6px;
-      font-size: 13px;
+      font-size: 14px;
       font-family: monospace;
       opacity: 0.85;
+      background: rgba(0,0,0,0.2);
+      padding: 6px 16px;
+      border-radius: 40px;
     }
     .container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      display: flex;
+      flex-direction: column;
       gap: 18px;
-      padding: 24px;
     }
-    .card {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(0,229,255,0.15);
-      border-radius: 14px;
-      padding: 16px;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 10px 35px rgba(0,0,0,0.4);
-      transition: 0.25s ease;
-      position: relative;
+    .list-item {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(0, 229, 255, 0.10);
+      border-radius: 20px;
+      padding: 18px 24px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
+      transition: 0.2s ease;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
     }
-    .card:hover {
-      transform: translateY(-6px);
+    .list-item:hover {
       border-color: rgba(123, 44, 255, 0.5);
-      box-shadow: 0 15px 45px rgba(0,0,0,0.6);
+      background: rgba(255, 255, 255, 0.07);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
     }
-    .card h2 {
-      margin-top: 0;
+    .list-item .left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1 1 200px;
+    }
+    .list-item .left .label {
       font-size: 18px;
-      color: #00e5ff;
-      text-shadow: 0 0 10px rgba(0,229,255,0.25);
+      font-weight: 600;
+      color: #b3f0ff;
+      letter-spacing: 0.3px;
     }
-    .log {
-      font-size: 14px;
-      line-height: 1.7;
-      opacity: 0.9;
+    .list-item .left .desc {
+      font-size: 13px;
+      opacity: 0.7;
+      color: #c0d6f0;
+    }
+    .list-item .right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
     }
     .script-box {
-      margin-top: 10px;
-      background: rgba(0,0,0,0.45);
-      padding: 12px;
-      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-family: 'JetBrains Mono', 'Cascadia Code', monospace;
       word-break: break-all;
-      font-size: 13px;
-      border: 1px solid rgba(255,255,255,0.08);
+      border: 1px solid rgba(255, 255, 255, 0.06);
       color: #aef3ff;
-      box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+      max-width: 320px;
       white-space: pre-wrap;
+      box-shadow: inset 0 0 12px rgba(0,0,0,0.4);
     }
-    .script-item {
-      margin-bottom: 14px;
-    }
-    .script-item:last-child {
-      margin-bottom: 0;
-    }
-    .script-item .script-label {
-      font-size: 13px;
-      font-weight: bold;
-      color: #00e5ff;
-      margin-bottom: 4px;
-      display: block;
-    }
-    .script-item .script-box {
-      margin-top: 4px;
-    }
-    button {
-      margin-top: 10px;
-      padding: 9px 14px;
+    .btn-copy {
+      padding: 8px 18px;
       background: linear-gradient(90deg, #7b2cff, #00e5ff);
       border: none;
       color: white;
-      border-radius: 8px;
+      border-radius: 40px;
       cursor: pointer;
-      font-weight: bold;
+      font-weight: 600;
+      font-size: 14px;
       transition: 0.2s;
-      box-shadow: 0 0 12px rgba(0,229,255,0.25);
+      box-shadow: 0 0 12px rgba(0, 229, 255, 0.15);
       touch-action: manipulation;
+      white-space: nowrap;
     }
-    button:hover {
-      transform: scale(1.06);
-      box-shadow: 0 0 18px rgba(0,229,255,0.55);
+    .btn-copy:hover {
+      transform: scale(1.04);
+      box-shadow: 0 0 24px rgba(0, 229, 255, 0.3);
     }
-    button:active {
-      transform: scale(0.95);
+    .btn-copy:active {
+      transform: scale(0.94);
     }
-    footer {
-      text-align: center;
-      padding: 15px;
-      opacity: 0.5;
-      font-size: 12px;
-    }
-    .main-script {
-      border: 1px solid rgba(0,229,255,0.35);
-      box-shadow: 0 0 25px rgba(0,229,255,0.15);
-    }
-
-    .qq-group-btn {
-      display: block;
-      width: 100%;
-      padding: 20px 0;
-      background: linear-gradient(135deg, #f7971e, #ffd200);
-      border: none;
-      border-radius: 16px;
-      color: #1a1a2e;
-      font-size: 24px;
-      font-weight: 900;
-      text-align: center;
-      text-decoration: none;
-      cursor: pointer;
-      box-shadow: 0 6px 35px rgba(255, 210, 0, 0.5);
-      transition: 0.3s ease;
-      letter-spacing: 2px;
-      margin-bottom: 16px;
-      touch-action: manipulation;
-    }
-    .qq-group-btn:hover {
-      transform: scale(1.03);
-      box-shadow: 0 8px 50px rgba(255, 210, 0, 0.8);
-    }
-    .qq-group-btn:active {
-      transform: scale(0.97);
-    }
-
-    .server-list {
+    .server-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 12px;
+      gap: 10px;
+      margin-top: 6px;
     }
     .server-tag {
-      background: rgba(0, 229, 255, 0.10);
-      border: 1px solid rgba(0, 229, 255, 0.25);
-      padding: 6px 14px;
+      background: rgba(0, 229, 255, 0.07);
+      border: 1px solid rgba(0, 229, 255, 0.15);
+      padding: 4px 14px;
       border-radius: 40px;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 500;
       color: #b3f0ff;
-      backdrop-filter: blur(4px);
-      transition: 0.2s;
-      letter-spacing: 0.5px;
       display: inline-flex;
       align-items: center;
       gap: 6px;
     }
-    .server-tag:hover {
-      background: rgba(123, 44, 255, 0.25);
-      border-color: #7b2cff;
-      transform: scale(1.04);
-      box-shadow: 0 0 20px rgba(123, 44, 255, 0.3);
-    }
     .status-dot {
       display: inline-block;
-      width: 12px;
-      height: 12px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
       flex-shrink: 0;
-      border: 1px solid rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.1);
     }
     .status-dot.green { background: #2ecc71; box-shadow: 0 0 8px #2ecc71aa; }
     .status-dot.red { background: #e74c3c; box-shadow: 0 0 8px #e74c3caa; }
     .status-dot.yellow { background: #f1c40f; box-shadow: 0 0 8px #f1c40faa; }
     .status-dot.blue { background: #3498db; box-shadow: 0 0 8px #3498dbaa; }
-
-    .history-log {
-      margin-top: 18px;
-      border-top: 1px solid rgba(0,229,255,0.15);
-      padding-top: 14px;
-    }
-    .history-log h3 {
-      font-size: 15px;
-      color: #aef3ff;
-      margin-bottom: 8px;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-    }
-    .scroll-log {
-      max-height: 140px;
-      overflow-y: auto;
-      padding-right: 6px;
+    .footer {
+      text-align: center;
+      padding: 24px 12px 12px;
+      opacity: 0.4;
       font-size: 13px;
-      line-height: 1.7;
-      color: #c8e6f0;
+      margin-top: 10px;
+    }
+    .history-log {
+      margin-top: 6px;
+      border-top: 1px solid rgba(0,229,255,0.08);
+      padding-top: 12px;
+    }
+    .history-log .scroll-log {
+      max-height: 100px;
+      overflow-y: auto;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #b8d4f0;
       scrollbar-width: thin;
       scrollbar-color: #7b2cff rgba(255,255,255,0.05);
     }
-    .scroll-log::-webkit-scrollbar {
-      width: 5px;
-    }
-    .scroll-log::-webkit-scrollbar-track {
-      background: rgba(255,255,255,0.05);
-      border-radius: 8px;
-    }
-    .scroll-log::-webkit-scrollbar-thumb {
-      background: #7b2cff;
-      border-radius: 8px;
-    }
-    .scroll-log p {
-      margin-bottom: 4px;
-      border-bottom: 1px dashed rgba(255,255,255,0.04);
-      padding-bottom: 4px;
-    }
-    .scroll-log .date {
-      color: #00e5ff;
-      font-weight: 500;
-      margin-right: 8px;
-    }
-
+    .history-log .scroll-log::-webkit-scrollbar { width: 4px; }
+    .history-log .scroll-log::-webkit-scrollbar-thumb { background: #7b2cff; border-radius: 8px; }
+    .history-log .date { color: #00e5ff; font-weight: 500; margin-right: 8px; }
     .feedback-area {
-      margin: 16px 0 12px 0;
-      border-top: 1px solid rgba(0,229,255,0.15);
-      padding-top: 16px;
-    }
-    .feedback-area label {
-      display: block;
-      font-size: 15px;
-      font-weight: 500;
-      color: #b3f0ff;
-      margin-bottom: 8px;
+      margin-top: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
     }
     .feedback-area input {
-      width: 100%;
-      padding: 12px 14px;
+      flex: 1 1 200px;
+      padding: 10px 18px;
       border-radius: 40px;
-      border: 1px solid rgba(0,229,255,0.25);
-      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(0,229,255,0.2);
+      background: rgba(0,0,0,0.4);
       color: white;
-      font-size: 15px;
-      backdrop-filter: blur(4px);
-      transition: 0.2s;
+      font-size: 14px;
       outline: none;
+      transition: 0.2s;
     }
     .feedback-area input:focus {
       border-color: #7b2cff;
-      box-shadow: 0 0 20px rgba(123, 44, 255, 0.25);
-      background: rgba(0,0,0,0.7);
+      box-shadow: 0 0 20px rgba(123, 44, 255, 0.15);
+      background: rgba(0,0,0,0.6);
     }
     .feedback-area input::placeholder {
-      color: rgba(255,255,255,0.3);
-      font-weight: 300;
+      color: rgba(255,255,255,0.25);
     }
-    .feedback-area .submit-feedback {
-      margin-top: 12px;
-      width: 100%;
-      padding: 12px;
+    .btn-feedback {
+      padding: 10px 28px;
       background: linear-gradient(90deg, #7b2cff, #00e5ff);
       border: none;
       border-radius: 40px;
       color: white;
-      font-weight: bold;
-      font-size: 16px;
+      font-weight: 600;
+      font-size: 14px;
       cursor: pointer;
       transition: 0.2s;
-      box-shadow: 0 0 15px rgba(0,229,255,0.2);
+      box-shadow: 0 0 15px rgba(0,229,255,0.1);
+      touch-action: manipulation;
+      white-space: nowrap;
+    }
+    .btn-feedback:hover { transform: scale(1.03); box-shadow: 0 0 28px rgba(0,229,255,0.25); }
+    .btn-feedback:active { transform: scale(0.96); }
+    .qq-group-btn {
+      display: inline-block;
+      padding: 10px 28px;
+      background: linear-gradient(135deg, #f7971e, #ffd200);
+      border: none;
+      border-radius: 40px;
+      color: #1a1a2e;
+      font-weight: 700;
+      font-size: 16px;
+      text-decoration: none;
+      box-shadow: 0 6px 24px rgba(255, 210, 0, 0.25);
+      transition: 0.2s;
       touch-action: manipulation;
     }
-    .feedback-area .submit-feedback:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 30px rgba(0,229,255,0.4);
-    }
-    .feedback-area .submit-feedback:active {
-      transform: scale(0.97);
-    }
-
-    @media (max-width: 600px) {
-      header { font-size: 18px; padding: 16px; }
-      .qq-group-btn { font-size: 18px; padding: 16px 0; }
+    .qq-group-btn:hover { transform: scale(1.03); box-shadow: 0 8px 36px rgba(255, 210, 0, 0.5); }
+    .qq-group-btn:active { transform: scale(0.97); }
+    @media (max-width: 700px) {
+      .welcome-card { padding: 32px 20px; }
+      .welcome-card h1 { font-size: 32px; }
+      .list-item { flex-direction: column; align-items: stretch; }
+      .script-box { max-width: 100%; }
+      header { flex-direction: column; gap: 8px; }
     }
   </style>
 </head>
 <body>
 
-<header>
-  VOTR脚本网页😍
-  <div class="time-box">当前时间: <span id="time"></span></div>
-</header>
-
-<div class="container">
-
-  <div class="card">
-    <a href="https://qm.qq.com/q/x9AfF64NbO" target="_blank" class="qq-group-btn">📢 加入QQ群</a>
-    <h2>更新日志</h2>
-    <div class="log">
-      • 版本 : 2.1<br>
-      • 添加用户协议
-    </div>
+<div id="welcome" class="welcome-card">
+  <h1>⚡ VOTR HUB</h1>
+  <div class="sub">脚本聚合 · 稳定更新</div>
+  <p>
+    欢迎来到 VOTR 脚本中心！<br>
+    我们提供多款游戏脚本，持续维护，适配最新版本。<br>
+    所有脚本均经过测试，请放心使用。
+  </p>
+  <div class="btn-group">
+    <button class="btn" id="enterBtn">🚀 进入</button>
+    <a href="https://qm.qq.com/q/x9AfF64NbO" target="_blank" class="btn btn-qq">📢 加入QQ群</a>
   </div>
+</div>
 
-  <div class="card main-script">
-    <h2>主脚本</h2>
-    <div class="script-box" id="script1">
-VOTR = "887502203"
-loadstring(game:HttpGet("https://raw.githubusercontent.com/VOTR-HUB/MAIN/refs/heads/main/VOTR-MAIN"))()
+<div id="mainApp" class="main-app">
+  <header>
+    <span class="title">🛸 VOTR 脚本列表</span>
+    <span class="time-box" id="time"></span>
+  </header>
+
+  <div class="container">
+
+    <div class="list-item">
+      <div class="left">
+        <span class="label">📌 主脚本 · VOTR</span>
+        <span class="desc">核心功能，支持大部分服务器</span>
+        <div class="server-tags">
+          <span class="server-tag"><span class="status-dot green"></span>Ohio</span>
+          <span class="server-tag"><span class="status-dot green"></span>狙击竞技场</span>
+          <span class="server-tag"><span class="status-dot green"></span>动物医院</span>
+          <span class="server-tag"><span class="status-dot green"></span>po大po</span>
+          <span class="server-tag"><span class="status-dot green"></span>Doors</span>
+          <span class="server-tag"><span class="status-dot green"></span>踢一个幸运方块</span>
+          <span class="server-tag"><span class="status-dot red"></span>通缉</span>
+          <span class="server-tag"><span class="status-dot yellow"></span>chain</span>
+          <span class="server-tag"><span class="status-dot green"></span>行动一</span>
+          <span class="server-tag"><span class="status-dot green"></span>自然灾害</span>
+        </div>
+      </div>
+      <div class="right">
+        <div class="script-box" id="script1">VOTR = "887502203"\nloadstring(game:HttpGet("https://raw.githubusercontent.com/VOTR-HUB/MAIN/refs/heads/main/VOTR-MAIN"))()</div>
+        <button class="btn-copy" onclick="copyText('script1')">复制</button>
+      </div>
     </div>
-    <button onclick="copyText('script1')">复制脚本</button>
 
-    <div style="margin-top: 20px; border-top: 1px solid rgba(0,229,255,0.15); padding-top: 16px;">
-      <h2 style="font-size: 17px; margin-bottom: 6px;">🖥️ 支持的服务器</h2>
-      <div class="server-list">
-        <span class="server-tag"><span class="status-dot red"></span>Ohio</span>
-        <span class="server-tag"><span class="status-dot green"></span>狙击竞技场</span>
-        <span class="server-tag"><span class="status-dot green"></span>动物医院</span>
-        <span class="server-tag"><span class="status-dot green"></span>po大po</span>
-        <span class="server-tag"><span class="status-dot green"></span>Doors</span>
-        <span class="server-tag"><span class="status-dot green"></span>踢一个幸运方块</span>
-        <span class="server-tag"><span class="status-dot red"></span>通缉</span>
-        <span class="server-tag"><span class="status-dot yellow"></span>chain</span>
-        <span class="server-tag"><span class="status-dot green"></span>行动一</span>
-        <span class="server-tag"><span class="status-dot green"></span>自然灾害</span>
+    <div class="list-item">
+      <div class="left">
+        <span class="label">🧩 Boki Script</span>
+        <span class="desc">轻量辅助脚本</span>
       </div>
-      <div style="font-size: 12px; opacity: 0.6; margin-top: 8px; display: flex; flex-wrap: wrap; gap: 10px;">
-        <span><span class="status-dot green" style="width:10px;height:10px;display:inline-block;vertical-align:middle;"></span> 稳定</span>
-        <span><span class="status-dot red" style="width:10px;height:10px;display:inline-block;vertical-align:middle;"></span> 谨慎使用</span>
-        <span><span class="status-dot yellow" style="width:10px;height:10px;display:inline-block;vertical-align:middle;"></span> 修复中</span>
-        <span><span class="status-dot blue" style="width:10px;height:10px;display:inline-block;vertical-align:middle;"></span> 已删除</span>
+      <div class="right">
+        <div class="script-box" id="script2">loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/f4747ea7268316a211a6415505bc9c45.lua"))()</div>
+        <button class="btn-copy" onclick="copyText('script2')">复制</button>
       </div>
+    </div>
 
+    <div class="list-item">
+      <div class="left">
+        <span class="label">📦 等待添加</span>
+        <span class="desc">更多脚本即将上线</span>
+      </div>
+      <div class="right">
+        <div class="script-box" id="script3">广告位</div>
+        <button class="btn-copy" onclick="copyText('script3')">复制</button>
+      </div>
+    </div>
+
+    <div class="list-item">
+      <div class="left">
+        <span class="label">📦 等待添加</span>
+        <span class="desc">更多脚本即将上线</span>
+      </div>
+      <div class="right">
+        <div class="script-box" id="script4">广告位</div>
+        <button class="btn-copy" onclick="copyText('script4')">复制</button>
+      </div>
+    </div>
+
+    <div class="list-item">
+      <div class="left">
+        <span class="label">📬 希望更新的服务器脚本</span>
+        <span class="desc">输入你需要的脚本名称，提交给开发者</span>
+        <div class="feedback-area">
+          <input type="text" id="serverFeedback" placeholder="例如：BedWars、BloxFruits..." />
+          <button class="btn-feedback" id="submitFeedbackBtn">提交建议</button>
+        </div>
+      </div>
+      <div class="right" style="flex:1; min-width:120px;">
+        <a href="https://qm.qq.com/q/x9AfF64NbO" target="_blank" class="qq-group-btn">📢 加入QQ群</a>
+      </div>
+    </div>
+
+    <div class="list-item" style="flex-direction:column; align-items:stretch;">
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px;">
+        <span class="label">📜 更新日志 & 状态</span>
+        <span style="font-size:13px; opacity:0.7;">版本 2.1 · 2026-07-05</span>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:12px; font-size:14px; opacity:0.8;">
+        <span><span class="status-dot green" style="width:10px;height:10px;"></span> 稳定</span>
+        <span><span class="status-dot red" style="width:10px;height:10px;"></span> 谨慎</span>
+        <span><span class="status-dot yellow" style="width:10px;height:10px;"></span> 修复中</span>
+        <span><span class="status-dot blue" style="width:10px;height:10px;"></span> 已删除</span>
+        <span style="margin-left:auto;">👥 开发：NiL Team</span>
+      </div>
       <div class="history-log">
-        <h3>📜 历史更新日志</h3>
         <div class="scroll-log">
           <p><span class="date">2026-07-05</span> 版本 2.1 · 添加用户协议，优化服务器状态显示</p>
           <p><span class="date">2026-07-04</span> 版本 2.0 · 修复狙击竞技场，更新po大po、动物医院，修复ohio传送</p>
-          <p><span class="date">2026-07-02</span> 版本 1.9 · 新增支持「踢一个幸运方块」服务器，优化脚本加载</p>
-          <p><span class="date">2026-06-30</span> 版本 1.8 · 修复Doors服务器兼容性问题，标记为谨慎使用</p>
-          <p><span class="date">2026-06-28</span> 版本 1.7 · 新增chain、行动一服务器支持，调整UI配色</p>
-          <p><span class="date">2026-06-25</span> 版本 1.6 · 移除「通缉」服务器（已删除），添加自然灾害（修复中）</p>
-          <p><span class="date">2026-06-22</span> 版本 1.5 · 初始版本发布，支持Ohio、狙击竞技场等基础服务器</p>
+          <p><span class="date">2026-07-02</span> 版本 1.9 · 新增支持「踢一个幸运方块」服务器</p>
+          <p><span class="date">2026-06-30</span> 版本 1.8 · 修复Doors兼容性问题</p>
+          <p><span class="date">2026-06-28</span> 版本 1.7 · 新增chain、行动一支持</p>
+          <p><span class="date">2026-06-25</span> 版本 1.6 · 移除「通缉」，添加自然灾害（修复中）</p>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="card">
-    <h2>作者团队</h2>
-    <div class="log">
-      • 主开发：NiL Team<br>
-      • UI设计：NiL Team<br>
-      • 脚本维护：空白<br>
-      • 测试：招募中
-    </div>
   </div>
-
-  <div class="card">
-    <h2>系统状态</h2>
-    <div class="log">
-      状态：Online<br>
-      服务器：Stable<br>
-      延迟：Low<br>
-    </div>
-  </div>
-
-  <div class="card">
-    <h2>📬 希望更新的服务器脚本名称</h2>
-    <div class="feedback-area">
-      <label for="serverFeedback">输入你希望添加或更新的服务器脚本名称</label>
-      <input type="text" id="serverFeedback" placeholder="例如：BedWars、BloxFruits、Arsenal..." />
-      <button class="submit-feedback" id="submitFeedbackBtn">📤 提交建议至 开发者中心</button>
-      <div style="margin-top: 12px; font-size: 13px; opacity: 0.6; display: flex; gap: 8px; flex-wrap: wrap;">
-        <span>✨ 你的反馈将帮助 VOTR HUB优化脚本</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <h2>更多脚本</h2>
-    <div class="script-item">
-      <span class="script-label">Boki Script</span>
-      <div class="script-box" id="script2">loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/f4747ea7268316a211a6415505bc9c45.lua"))()</div>
-      <button onclick="copyText('script2')">复制脚本</button>
-    </div>
-    <div class="script-item">
-      <span class="script-label">等待添加</span>
-      <div class="script-box" id="script3">广告位</div>
-      <button onclick="copyText('script3')">复制脚本</button>
-    </div>
-    <div class="script-item">
-      <span class="script-label">等待添加</span>
-      <div class="script-box" id="script4">广告位</div>
-      <button onclick="copyText('script4')">复制脚本</button>
-    </div>
-  </div>
-
+  <div class="footer">© 2026 VOTR-HUB</div>
 </div>
 
-<footer>
-  © 2026 VOTR-HUB
-</footer>
-
 <script>
-  function updateTime() {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const seconds = String(now.getSeconds()).padStart(2, '0');
-    document.getElementById("time").innerText = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-  }
-  setInterval(updateTime, 1000);
-  updateTime();
+  (function() {
+    const welcome = document.getElementById('welcome');
+    const mainApp = document.getElementById('mainApp');
+    const enterBtn = document.getElementById('enterBtn');
 
-  function copyText(id) {
-    const element = document.getElementById(id);
-    if (!element) {
-      alert("❌ 未找到要复制的内容");
-      return;
+    enterBtn.addEventListener('click', function() {
+      welcome.style.display = 'none';
+      mainApp.classList.add('active');
+    });
+
+    function updateTime() {
+      const now = new Date();
+      const pad = n => String(n).padStart(2, '0');
+      document.getElementById('time').innerText =
+        `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
     }
-    const text = element.innerText.trim();
-    if (navigator.clipboard && window.isSecureContext) {
-      navigator.clipboard.writeText(text)
-        .then(() => showToast("✅ 脚本已复制！"))
-        .catch(() => fallbackCopy(text));
-    } else {
-      fallbackCopy(text);
-    }
-  }
+    setInterval(updateTime, 1000);
+    updateTime();
 
-  function fallbackCopy(text) {
-    const textarea = document.createElement('textarea');
-    textarea.value = text;
-    textarea.style.position = 'fixed';
-    textarea.style.opacity = '0';
-    textarea.style.left = '-9999px';
-    textarea.style.top = '-9999px';
-    textarea.style.width = '1px';
-    textarea.style.height = '1px';
-    document.body.appendChild(textarea);
-    textarea.focus();
-    textarea.select();
-    try {
-      const success = document.execCommand('copy');
-      showToast(success ? "✅ 脚本已复制！" : "❌ 复制失败，请手动复制");
-    } catch {
-      showToast("❌ 复制失败，请手动复制");
-    }
-    document.body.removeChild(textarea);
-  }
-
-  function showToast(message) {
-    const toast = document.createElement('div');
-    toast.textContent = message;
-    toast.style.cssText = `
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0,0,0,0.8);
-      color: white;
-      padding: 12px 24px;
-      border-radius: 8px;
-      font-size: 16px;
-      z-index: 1000;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(0,229,255,0.2);
-      animation: fadeInUp 0.3s ease;
-      pointer-events: none;
-    `;
-    document.body.appendChild(toast);
-    setTimeout(() => {
-      toast.style.opacity = '0';
-      toast.style.transition = 'opacity 0.3s ease';
-      setTimeout(() => document.body.removeChild(toast), 300);
-    }, 2000);
-  }
-
-  const style = document.createElement('style');
-  style.textContent = `
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateX(-50%) translateY(20px); }
-      to { opacity: 1; transform: translateX(-50%) translateY(0); }
-    }
-  `;
-  document.head.appendChild(style);
-
-  document.getElementById('submitFeedbackBtn').addEventListener('click', function(e) {
-    const input = document.getElementById('serverFeedback');
-    const value = input.value.trim();
-
-    if (!value) {
-      showToast('⚠️ 请先输入服务器脚本名称');
-      return;
-    }
-
-    const btn = e.currentTarget;
-    btn.disabled = true;
-    btn.textContent = '⏳ 提交中...';
-
-    const webhookUrl = 'https://discord.com/api/webhooks/1501817051692666960/O64hwylgFc7roeBs9C0i0zWEdArD8OfdQnRNSR1ooaP-j5CyOgc9SVyjrcYiQ5K67ro6';
-
-    const payload = {
-      content: `📢 **新的脚本建议**\n> ${value}`,
-      embeds: [
-        {
-          title: '希望更新的服务器脚本',
-          description: value,
-          color: 0x7b2cff,
-          timestamp: new Date().toISOString(),
-          footer: {
-            text: 'VOTR HUB 反馈'
-          }
-        }
-      ]
+    window.copyText = function(id) {
+      const el = document.getElementById(id);
+      if (!el) return showToast('❌ 未找到内容');
+      const text = el.innerText.trim();
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => showToast('✅ 已复制')).catch(() => fallbackCopy(text));
+      } else {
+        fallbackCopy(text);
+      }
     };
 
-    fetch(webhookUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
-    })
-    .then(response => {
-      if (response.ok) {
-        showToast('✅ 建议已发给开发者！感谢反馈');
-        input.value = '';
-      } else {
-        showToast('❌ 提交失败，请稍后重试 (状态: ' + response.status + ')');
+    function fallbackCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;opacity:0;left:-9999px;top:-9999px;width:1px;height:1px;';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        const ok = document.execCommand('copy');
+        showToast(ok ? '✅ 已复制' : '❌ 复制失败');
+      } catch {
+        showToast('❌ 复制失败');
       }
-    })
-    .catch(error => {
-      console.error('Webhook Error:', error);
-      showToast('❌ 网络错误，请检查连接后重试');
-    })
-    .finally(() => {
-      btn.disabled = false;
-      btn.textContent = '📤 提交建议至 开发者中心';
+      document.body.removeChild(ta);
+    }
+
+    function showToast(msg) {
+      const t = document.createElement('div');
+      t.textContent = msg;
+      Object.assign(t.style, {
+        position: 'fixed',
+        bottom: '30px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        background: 'rgba(0,0,0,0.8)',
+        color: '#fff',
+        padding: '12px 28px',
+        borderRadius: '40px',
+        fontSize: '15px',
+        zIndex: '9999',
+        backdropFilter: 'blur(10px)',
+        border: '1px solid rgba(0,229,255,0.15)',
+        animation: 'fadeInUp 0.25s ease',
+        pointerEvents: 'none',
+        fontFamily: 'Segoe UI, sans-serif'
+      });
+      document.body.appendChild(t);
+      setTimeout(() => {
+        t.style.opacity = '0';
+        t.style.transition = 'opacity 0.3s';
+        setTimeout(() => document.body.removeChild(t), 300);
+      }, 2000);
+    }
+
+    const styleAnim = document.createElement('style');
+    styleAnim.textContent = `
+      @keyframes fadeInUp {
+        from { opacity:0; transform:translateX(-50%) translateY(20px); }
+        to { opacity:1; transform:translateX(-50%) translateY(0); }
+      }
+    `;
+    document.head.appendChild(styleAnim);
+
+    const feedbackBtn = document.getElementById('submitFeedbackBtn');
+    const feedbackInput = document.getElementById('serverFeedback');
+
+    feedbackBtn.addEventListener('click', function() {
+      const val = feedbackInput.value.trim();
+      if (!val) {
+        showToast('⚠️ 请输入脚本名称');
+        return;
+      }
+      const btn = this;
+      btn.disabled = true;
+      btn.textContent = '⏳ 提交中...';
+
+      const webhook = 'https://discord.com/api/webhooks/1501817051692666960/O64hwylgFc7roeBs9C0i0zWEdArD8OfdQnRNSR1ooaP-j5CyOgc9SVyjrcYiQ5K67ro6';
+      fetch(webhook, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          content: `📢 **脚本建议**\n> ${val}`,
+          embeds: [{
+            title: '希望更新的服务器脚本',
+            description: val,
+            color: 0x7b2cff,
+            timestamp: new Date().toISOString(),
+            footer: { text: 'VOTR HUB 反馈' }
+          }]
+        })
+      })
+      .then(res => {
+        if (res.ok) {
+          showToast('✅ 建议已发送，感谢反馈');
+          feedbackInput.value = '';
+        } else {
+          showToast('❌ 提交失败 (状态 ' + res.status + ')');
+        }
+      })
+      .catch(() => showToast('❌ 网络错误，请重试'))
+      .finally(() => {
+        btn.disabled = false;
+        btn.textContent = '提交建议';
+      });
     });
-  });
-
+  })();
 </script>
-
 </body>
 </html>
