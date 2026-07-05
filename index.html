@@ -235,6 +235,63 @@
       margin-right: 8px;
     }
 
+    /* 新增的反馈卡片样式 */
+    .feedback-area {
+      margin: 16px 0 12px 0;
+      border-top: 1px solid rgba(0,229,255,0.15);
+      padding-top: 16px;
+    }
+    .feedback-area label {
+      display: block;
+      font-size: 15px;
+      font-weight: 500;
+      color: #b3f0ff;
+      margin-bottom: 8px;
+    }
+    .feedback-area input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 40px;
+      border: 1px solid rgba(0,229,255,0.25);
+      background: rgba(0,0,0,0.5);
+      color: white;
+      font-size: 15px;
+      backdrop-filter: blur(4px);
+      transition: 0.2s;
+      outline: none;
+    }
+    .feedback-area input:focus {
+      border-color: #7b2cff;
+      box-shadow: 0 0 20px rgba(123, 44, 255, 0.25);
+      background: rgba(0,0,0,0.7);
+    }
+    .feedback-area input::placeholder {
+      color: rgba(255,255,255,0.3);
+      font-weight: 300;
+    }
+    .feedback-area .submit-feedback {
+      margin-top: 12px;
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(90deg, #7b2cff, #00e5ff);
+      border: none;
+      border-radius: 40px;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 0 15px rgba(0,229,255,0.2);
+      touch-action: manipulation;
+    }
+    .feedback-area .submit-feedback:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 30px rgba(0,229,255,0.4);
+    }
+    .feedback-area .submit-feedback:active {
+      transform: scale(0.97);
+    }
+
     @media (max-width: 600px) {
       header { font-size: 18px; padding: 16px; }
       .qq-group-btn { font-size: 18px; padding: 16px 0; }
@@ -322,6 +379,19 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/VOTR-HUB/MAIN/refs/he
     </div>
   </div>
 
+  <!-- 在“更多脚本”上方新增的反馈卡片 -->
+  <div class="card">
+    <h2>📬 希望更新的服务器脚本名称</h2>
+    <div class="feedback-area">
+      <label for="serverFeedback">输入你希望添加或更新的服务器脚本名称</label>
+      <input type="text" id="serverFeedback" placeholder="例如：BedWars、BloxFruits、Arsenal..." />
+      <button class="submit-feedback" id="submitFeedbackBtn">📤 提交建议至 Discord</button>
+      <div style="margin-top: 12px; font-size: 13px; opacity: 0.6; display: flex; gap: 8px; flex-wrap: wrap;">
+        <span>✨ 你的反馈将帮助 VOTR 团队优化脚本</span>
+      </div>
+    </div>
+  </div>
+
   <div class="card">
     <h2>更多脚本</h2>
     <div class="script-item">
@@ -348,6 +418,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/VOTR-HUB/MAIN/refs/he
 </footer>
 
 <script>
+  // 时间更新
   function updateTime() {
     const now = new Date();
     const year = now.getFullYear();
@@ -361,6 +432,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/VOTR-HUB/MAIN/refs/he
   setInterval(updateTime, 1000);
   updateTime();
 
+  // 复制功能
   function copyText(id) {
     const element = document.getElementById(id);
     if (!element) {
@@ -433,6 +505,65 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/VOTR-HUB/MAIN/refs/he
     }
   `;
   document.head.appendChild(style);
+
+  // ---------- 新增：Discord Webhook 提交逻辑 ----------
+  document.getElementById('submitFeedbackBtn').addEventListener('click', function(e) {
+    const input = document.getElementById('serverFeedback');
+    const value = input.value.trim();
+
+    if (!value) {
+      showToast('⚠️ 请先输入服务器脚本名称');
+      return;
+    }
+
+    // 禁用按钮防止重复提交
+    const btn = e.currentTarget;
+    btn.disabled = true;
+    btn.textContent = '⏳ 提交中...';
+
+    const webhookUrl = 'https://discord.com/api/webhooks/1501817051692666960/O64hwylgFc7roeBs9C0i0zWEdArD8OfdQnRNSR1ooaP-j5CyOgc9SVyjrcYiQ5K67ro6';
+
+    // 构建 payload (Discord 消息格式)
+    const payload = {
+      content: `📢 **新的脚本建议**\n> ${value}`,
+      embeds: [
+        {
+          title: '希望更新的服务器脚本',
+          description: value,
+          color: 0x7b2cff,
+          timestamp: new Date().toISOString(),
+          footer: {
+            text: 'VOTR HUB 反馈'
+          }
+        }
+      ]
+    };
+
+    fetch(webhookUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    })
+    .then(response => {
+      if (response.ok) {
+        showToast('✅ 建议已发送至 Discord！感谢反馈');
+        input.value = ''; // 清空输入
+      } else {
+        showToast('❌ 提交失败，请稍后重试 (状态: ' + response.status + ')');
+      }
+    })
+    .catch(error => {
+      console.error('Webhook Error:', error);
+      showToast('❌ 网络错误，请检查连接后重试');
+    })
+    .finally(() => {
+      btn.disabled = false;
+      btn.textContent = '📤 提交建议至 Discord';
+    });
+  });
+
 </script>
 
 </body>
