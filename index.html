@@ -556,7 +556,7 @@
 
   <div class="captcha-area">
     <input type="text" id="captchaInput" placeholder="防人机，答对进入" autocomplete="off" />
-    <span class="captcha-hint">🔐 答案: 加群获取 887502203</span>
+    <span class="captcha-hint">🔐 答案: VOTRnb</span>
   </div>
 
   <div class="btn-group">
@@ -730,72 +730,176 @@
 
 <script>
   (function() {
-    var _0x1a2b3c = {
-      'welcome': document.getElementById('welcome'),
-      'mainApp': document.getElementById('mainApp'),
-      'enterBtn': document.getElementById('enterBtn'),
-      'captchaInput': document.getElementById('captchaInput'),
-      'correct': 'VOTRnb',
-      'navTabs': document.querySelectorAll('.nav-tabs span'),
-      'tabContents': {
-        'tab-home': document.getElementById('tab-home'),
-        'tab-script': document.getElementById('tab-script'),
-        'tab-profile': document.getElementById('tab-profile'),
-        'tab-bg': document.getElementById('tab-bg')
-      }
-    };
+    const welcome = document.getElementById('welcome');
+    const mainApp = document.getElementById('mainApp');
+    const enterBtn = document.getElementById('enterBtn');
+    const captchaInput = document.getElementById('captchaInput');
+    const CORRECT = 'VOTRnb';
 
     function validateCaptcha() {
-      var val = _0x1a2b3c.captchaInput.value.trim();
-      if (val === _0x1a2b3c.correct) {
-        _0x1a2b3c.enterBtn.disabled = false;
-        _0x1a2b3c.enterBtn.style.opacity = '1';
-        _0x1a2b3c.enterBtn.style.cursor = 'pointer';
+      const val = captchaInput.value.trim();
+      if (val === CORRECT) {
+        enterBtn.disabled = false;
+        enterBtn.style.opacity = '1';
+        enterBtn.style.cursor = 'pointer';
       } else {
-        _0x1a2b3c.enterBtn.disabled = true;
-        _0x1a2b3c.enterBtn.style.opacity = '0.5';
-        _0x1a2b3c.enterBtn.style.cursor = 'not-allowed';
+        enterBtn.disabled = true;
+        enterBtn.style.opacity = '0.5';
+        enterBtn.style.cursor = 'not-allowed';
       }
     }
 
-    _0x1a2b3c.captchaInput.addEventListener('input', validateCaptcha);
-    _0x1a2b3c.captchaInput.addEventListener('paste', function() {
+    captchaInput.addEventListener('input', validateCaptcha);
+    captchaInput.addEventListener('paste', function() {
       setTimeout(validateCaptcha, 10);
     });
 
-    _0x1a2b3c.enterBtn.addEventListener('click', function() {
-      if (_0x1a2b3c.enterBtn.disabled) return;
-      _0x1a2b3c.welcome.style.display = 'none';
-      _0x1a2b3c.mainApp.classList.add('active');
+    enterBtn.addEventListener('click', function() {
+      if (enterBtn.disabled) return;
+      welcome.style.display = 'none';
+      mainApp.classList.add('active');
     });
 
     function updateTime() {
-      var now = new Date();
-      var pad = function(n) { return String(n).padStart(2, '0'); };
+      const now = new Date();
+      const pad = n => String(n).padStart(2, '0');
       document.getElementById('time').innerText =
-        now.getFullYear() + '-' + pad(now.getMonth()+1) + '-' + pad(now.getDate()) + ' ' + pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds());
+        `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
     }
     setInterval(updateTime, 1000);
     updateTime();
 
-    _0x1a2b3c.navTabs.forEach(function(tab) {
+    const navTabs = document.querySelectorAll('.nav-tabs span');
+    const tabContents = {
+      'tab-home': document.getElementById('tab-home'),
+      'tab-script': document.getElementById('tab-script'),
+      'tab-profile': document.getElementById('tab-profile'),
+      'tab-bg': document.getElementById('tab-bg')
+    };
+
+    navTabs.forEach(tab => {
       tab.addEventListener('click', function() {
-        _0x1a2b3c.navTabs.forEach(function(t) { t.classList.remove('active'); });
+        navTabs.forEach(t => t.classList.remove('active'));
         this.classList.add('active');
-        var targetId = this.getAttribute('data-tab');
-        Object.keys(_0x1a2b3c.tabContents).forEach(function(key) {
-          _0x1a2b3c.tabContents[key].classList.remove('active');
+
+        const targetId = this.getAttribute('data-tab');
+        Object.keys(tabContents).forEach(key => {
+          tabContents[key].classList.remove('active');
         });
-        if (_0x1a2b3c.tabContents[targetId]) {
-          _0x1a2b3c.tabContents[targetId].classList.add('active');
+        if (tabContents[targetId]) {
+          tabContents[targetId].classList.add('active');
         }
       });
     });
 
     window.copyText = function(id) {
-      var el = document.getElementById(id);
+      const el = document.getElementById(id);
       if (!el) return showToast('❌ 未找到内容');
-      var text = el.innerText.trim();
+      const text = el.innerText.trim();
       if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(text).then(function() { showToast('✅ 已复制'); }).catch(function() { fallbackCopy(text); });
+        navigator.clipboard.writeText(text).then(() => showToast('✅ 已复制')).catch(() => fallbackCopy(text));
       } else {
+        fallbackCopy(text);
+      }
+    };
+
+    function fallbackCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;opacity:0;left:-9999px;top:-9999px;width:1px;height:1px;';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        const ok = document.execCommand('copy');
+        showToast(ok ? '✅ 已复制' : '❌ 复制失败');
+      } catch {
+        showToast('❌ 复制失败');
+      }
+      document.body.removeChild(ta);
+    }
+
+    function showToast(msg) {
+      const t = document.createElement('div');
+      t.textContent = msg;
+      Object.assign(t.style, {
+        position: 'fixed',
+        bottom: '30px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        background: 'rgba(0,0,0,0.85)',
+        color: '#fff',
+        padding: '10px 28px',
+        borderRadius: '40px',
+        fontSize: '15px',
+        zIndex: '9999',
+        backdropFilter: 'blur(10px)',
+        border: '1px solid rgba(0,229,255,0.15)',
+        animation: 'fadeInUp 0.25s ease',
+        pointerEvents: 'none',
+        fontFamily: 'Segoe UI, sans-serif'
+      });
+      document.body.appendChild(t);
+      setTimeout(() => {
+        t.style.opacity = '0';
+        t.style.transition = 'opacity 0.3s';
+        setTimeout(() => document.body.removeChild(t), 300);
+      }, 2000);
+    }
+
+    const styleAnim = document.createElement('style');
+    styleAnim.textContent = `
+      @keyframes fadeInUp {
+        from { opacity:0; transform:translateX(-50%) translateY(20px); }
+        to { opacity:1; transform:translateX(-50%) translateY(0); }
+      }
+    `;
+    document.head.appendChild(styleAnim);
+
+    const feedbackBtn = document.getElementById('submitFeedbackBtn');
+    const feedbackInput = document.getElementById('serverFeedback');
+
+    feedbackBtn.addEventListener('click', function() {
+      const val = feedbackInput.value.trim();
+      if (!val) {
+        showToast('⚠️ 请输入脚本名称');
+        return;
+      }
+      const btn = this;
+      btn.disabled = true;
+      btn.textContent = '⏳ 提交中...';
+
+      const webhook = 'https://discord.com/api/webhooks/1501817051692666960/O64hwylgFc7roeBs9C0i0zWEdArD8OfdQnRNSR1ooaP-j5CyOgc9SVyjrcYiQ5K67ro6';
+      fetch(webhook, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          content: `📢 **脚本建议 (VOTR)**\n> ${val}`,
+          embeds: [{
+            title: '希望更新的服务器脚本',
+            description: val,
+            color: 0x4a7fd4,
+            timestamp: new Date().toISOString(),
+            footer: { text: 'VOTR HUB · NiL Team' }
+          }]
+        })
+      })
+      .then(res => {
+        if (res.ok) {
+          showToast('✅ 建议已发送，感谢反馈');
+          feedbackInput.value = '';
+        } else {
+          showToast('❌ 提交失败 (状态 ' + res.status + ')');
+        }
+      })
+      .catch(() => showToast('❌ 网络错误，请重试'))
+      .finally(() => {
+        btn.disabled = false;
+        btn.textContent = '📤 提交建议';
+      });
+    });
+
+    validateCaptcha();
+  })();
+</script>
+</body>
+</html>
